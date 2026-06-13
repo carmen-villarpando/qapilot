@@ -56,7 +56,7 @@ class AppTerminologyManager:
                     "https://taiga.io/features/",
                     "https://github.com/taigaio/taiga-doc"
                 ],
-                jerga=[
+                slang=[
                     "Let's create a user story for this",
                     "We need points for this task",
                     "What's the team velocity?",
@@ -115,7 +115,7 @@ class AppTerminologyManager:
                     "https://www.openproject.org/features/",
                     "https://api.openproject.org/"
                 ],
-                jerga=[
+                slang=[
                     "Let's create a work package for this",
                     "This needs a specific WP type",
                     "The Gantt shows the dependency",
@@ -174,7 +174,7 @@ class AppTerminologyManager:
                     "https://docs.github.com/en/issues",
                     "https://docs.github.com/en/projects"
                 ],
-                jerga=[
+                slang=[
                     "Let's open an issue for this",
                     "Let's make a pull request",
                     "This needs a merge",
