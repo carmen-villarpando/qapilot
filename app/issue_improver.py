@@ -27,9 +27,12 @@ class IssueImprover:
     ) -> bool:
         """Improve issue triggered by comment."""
         # Check if comment contains the trigger command
-        if not self._is_improve_command(comment_body):
+        command_type = self._is_improve_command(comment_body)
+        if not command_type:
             logger.info(f"Comment does not contain improve command: {comment_body}")
             return False
+        
+        logger.info(f"Detected command type: {command_type}")
 
         # Get the issue
         issue = self.github_client.get_issue(repo_name, issue_number)
@@ -75,9 +78,12 @@ class IssueImprover:
     ) -> bool:
         """Improve issue triggered on creation."""
         # Check if issue body contains the trigger command
-        if not self._is_improve_command(issue_body):
+        command_type = self._is_improve_command(issue_body)
+        if not command_type:
             logger.info(f"Issue body does not contain improve command: {issue_body}")
             return False
+        
+        logger.info(f"Detected command type: {command_type}")
 
         # Get the issue
         issue = self.github_client.get_issue(repo_name, issue_number)
@@ -99,7 +105,7 @@ class IssueImprover:
         logger.info(f"Repository context: {repo_context[:200]}...")
 
         # Generate improvements using templates with app terminology
-        improvements = self.template_engine.improve_issue(title, repo_context, repo_name)
+        improvements = self.template_engine.improve_issue(title, repo_context, repo_name, command_type)
         logger.info(f"Generated improvements keys: {list(improvements.keys()) if improvements else 'None'}")
         
         if not improvements:
@@ -112,6 +118,11 @@ class IssueImprover:
             logger.info(f"Generated description (first 500 chars): {improvements['description'][:500]}...")
         else:
             logger.warning("No description in improvements")
+        
+        # Update title if improvement was generated
+        if improvements.get("improved_title"):
+            logger.info(f"Updating title to: {improvements['improved_title']}")
+            # Title update will be handled in _apply_improvements
 
         # Apply improvements
         success = await self._apply_improvements(repo_name, issue_number, improvements)
@@ -123,10 +134,17 @@ class IssueImprover:
 
         return success
 
-    def _is_improve_command(self, comment_body: str) -> bool:
-        """Check if comment contains the improve command."""
-        # Look for /improve-issue command
-        return bool(re.search(r'/improve-issue', comment_body, re.IGNORECASE))
+    def _is_improve_command(self, comment_body: str) -> str:
+        """Check if comment contains any improve command and return the type."""
+        # Check for specific commands first
+        if re.search(r'/improve-bug', comment_body, re.IGNORECASE):
+            return "bug"
+        elif re.search(r'/improve-story', comment_body, re.IGNORECASE):
+            return "story"
+        elif re.search(r'/improve-issue', comment_body, re.IGNORECASE):
+            return "auto"  # Auto-detection mode
+        else:
+            return None
 
     async def _get_repo_context(self, repo_name: str) -> str:
         """Get repository context for better suggestions."""
@@ -172,10 +190,18 @@ class IssueImprover:
                     labels = [label.strip() for label in improvements["labels"].split(",")]
                 labels = [label for label in labels if label]  # Remove empty
 
-            # Update issue
+            # Get improved title if available
+            improved_title = improvements.get("improved_title")
+            if improved_title:
+                logger.info(f"Applying title update: {current_issue.title} -> {improved_title}")
+            else:
+                improved_title = current_issue.title
+
+            # Update issue with title, body, and labels
             success = self.github_client.update_issue(
                 repo_name=repo_name,
                 issue_number=issue_number,
+                title=improved_title,
                 body=new_body,
                 labels=labels
             )

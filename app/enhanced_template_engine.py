@@ -244,9 +244,29 @@ Based on the provided title, this issue appears related to critical functionalit
         
         return current_description
 
-    def improve_issue(self, title: str, repo_context: str = "", repo_name: str = "") -> Dict[str, Any]:
+    def improve_issue(self, title: str, repo_context: str = "", repo_name: str = "", command_type: str = "auto") -> Dict[str, Any]:
         """Improve an issue using enhanced templates with role-based perspectives and app terminology."""
+        import logging
+        logger = logging.getLogger(__name__)
+        
+        logger.info(f"Improving issue with command type: {command_type}")
         title_lower = title.lower()
+        
+        # Generate improved title based on command type
+        if command_type == "bug":
+            improved_title = self._generate_improved_title(title)
+        elif command_type == "story":
+            improved_title = self._generate_story_title(title)
+        else:  # auto
+            # Auto-detect and generate title
+            if self._is_bug_issue(title):
+                improved_title = self._generate_improved_title(title)
+            elif self._is_story_issue(title):
+                improved_title = self._generate_story_title(title)
+            else:
+                improved_title = self._correct_title_typos(title).title()
+        
+        logger.info(f"Generated improved title: {improved_title}")
         
         # Detect app from context
         detected_app = self.terminology_manager.detect_app_from_context(title, repo_name)
@@ -265,7 +285,9 @@ Based on the provided title, this issue appears related to critical functionalit
         
         if not matched_template:
             logger.info(f"No enhanced template found for: {title}, using generic")
-            return self._generate_generic_improvement(title, repo_context, detected_app)
+            improvements = self._generate_generic_improvement(title, repo_context, detected_app)
+            improvements["improved_title"] = improved_title
+            return improvements
         
         logger.info(f"Using enhanced template for: {title}")
         
@@ -337,14 +359,17 @@ Based on the provided title, this issue appears related to critical functionalit
         if "complexity" not in improvements:
             improvements["complexity"] = self._determine_complexity(title, detected_role)
         
+        # Add the improved title
+        improvements["improved_title"] = improved_title
+        
         return improvements
 
-    def _generate_generic_improvement(self, title: str, repo_context: str = "", detected_app: str = "github") -> Dict[str, Any]:
+    def _generate_generic_improvement(self, title: str, repo_context: str = "", detected_app: str = "github", command_type: str = "auto") -> Dict[str, Any]:
         """Generate generic improvements when no template matches."""
         import logging
         logger = logging.getLogger(__name__)
         
-        logger.info(f"Generating improvement for title: '{title}'")
+        logger.info(f"Generating improvement for title: '{title}' with command type: {command_type}")
         
         detected_role = self._detect_role_from_title(title)
         role_context = self.roles[detected_role]
@@ -364,12 +389,18 @@ Based on the provided title, this issue appears related to critical functionalit
         logger.info(f"Bug detection result: {self._is_bug_issue(title)}")
         logger.info(f"Story detection result: {self._is_story_issue(title)}")
         
-        # Generate professional QA-style description for bugs
-        if self._is_bug_issue(title):
-            logger.info("Using QA Lead format for bug")
+        # Generate professional QA-style description based on command type
+        if command_type == "bug":
+            logger.info("Using QA Lead format for bug (forced)")
+            description = self._generate_qa_lead_description(title, detected_app, detected_role, mentioned_features, app_enhanced_description)
+        elif command_type == "story":
+            logger.info("Using PO/PM format for story (forced)")
+            description = self._generate_po_pm_description(title, detected_app, detected_role, mentioned_features, app_enhanced_description)
+        elif self._is_bug_issue(title):
+            logger.info("Using QA Lead format for bug (auto-detected)")
             description = self._generate_qa_lead_description(title, detected_app, detected_role, mentioned_features, app_enhanced_description)
         elif self._is_story_issue(title):
-            logger.info("Using PO/PM format for story")
+            logger.info("Using PO/PM format for story (auto-detected)")
             description = self._generate_po_pm_description(title, detected_app, detected_role, mentioned_features, app_enhanced_description)
         else:
             description = f"""## 📝 Description
@@ -402,8 +433,25 @@ Based on the provided title, this issue appears related to critical functionalit
         app_labels = self.terminology_manager.suggest_labels(title, detected_app)
         logger.info(f"Generated labels: {list(set(['bug', 'needs-investigation', detected_role] + app_labels))}")
         
+        # Generate improved title based on command type
+        if command_type == "bug":
+            improved_title = self._generate_improved_title(title)
+        elif command_type == "story":
+            improved_title = self._generate_story_title(title)
+        else:  # auto
+            # Auto-detect and generate title
+            if self._is_bug_issue(title):
+                improved_title = self._generate_improved_title(title)
+            elif self._is_story_issue(title):
+                improved_title = self._generate_story_title(title)
+            else:
+                improved_title = self._correct_title_typos(title).title()
+        
+        logger.info(f"Generated improved title: {improved_title}")
+        
         return {
             "description": description,
+            "improved_title": improved_title,
             "labels": list(set(["bug", "needs-investigation", detected_role] + app_labels)),
             "priority": "medium",
             "assignee": "team-lead",
