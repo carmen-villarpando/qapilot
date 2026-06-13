@@ -136,7 +136,7 @@ class IssueImprover:
         sections = []
 
         if improvements.get("description"):
-            sections.append(f"## 📝 Description\n{improvements['description']}")
+            sections.append(improvements['description'])
 
         if improvements.get("reproduction_steps"):
             sections.append(f"## 🔧 Reproduction Steps\n{improvements['reproduction_steps']}")
