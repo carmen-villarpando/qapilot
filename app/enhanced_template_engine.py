@@ -661,7 +661,13 @@ Based on the provided title, this issue appears related to critical functionalit
             "bug", "error", "issue", "problem", "broken", "crash", "fail", "not working",
             "doesn't work", "incorrect", "wrong", "missing", "corrupt", "invalid",
             "exception", "timeout", "freeze", "hang", "stuck", "blocked", "blocked",
-            "not loading", "loading", "crash", "freeze", "hang", "stuck", "blocked"
+            "not loading", "loading", "crash", "freeze", "hang", "stuck", "blocked",
+            # UI/UX issues
+            "overlap", "submit", "button", "click", "display", "render", "layout",
+            "position", "align", "style", "css", "responsive", "mobile", "desktop",
+            "viewport", "scroll", "hover", "focus", "active", "disabled", "hidden",
+            "visible", "z-index", "float", "margin", "padding", "width", "height",
+            "form", "input", "validation", "required", "placeholder", "label"
         ]
         return any(keyword in title_lower for keyword in bug_keywords)
 
