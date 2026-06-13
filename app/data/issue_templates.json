@@ -1,0 +1,56 @@
+{
+  "scroll_issues": {
+    "keywords": ["scroll", "scrolling", "desplazar", "scrollbar", "scrolling"],
+    "improvements": {
+      "description": "## 📝 Descripción del Problema\n\nEl usuario reporta problemas con el scroll en la interfaz. Este issue afecta la experiencia de navegación del usuario al intentar acceder a contenido que excede el área visible de la pantalla.\n\n## 🔧 Pasos para Reproducir\n\n1. Acceder a la aplicación/sitio web\n2. Navegar a la sección afectada\n3. Intentar hacer scroll vertical u horizontal\n4. Observar que el scroll no responde o funciona incorrectamente\n\n## ✅ Comportamiento Esperado\n\nEl usuario debería poder desplazarse suavemente por todo el contenido utilizando:\n- Rueda del mouse\n- Trackpad\n- Barra de scroll\n- Gestos táctiles (en dispositivos móviles)\n\nEl scroll debe ser fluido, responsivo y permitir acceder a todo el contenido.",
+      "labels": ["bug", "ui", "scrolling", "user-experience"],
+      "priority": "medium",
+      "assignee": "frontend-team"
+    }
+  },
+  "login_issues": {
+    "keywords": ["login", "signin", "autenticación", "acceso", "sesión"],
+    "improvements": {
+      "description": "## 📝 Descripción del Problema\n\nEl usuario experimenta dificultades al intentar iniciar sesión en la aplicación. Este problema impide el acceso a funcionalidades restringidas y afecta directamente la experiencia del usuario.\n\n## 🔧 Pasos para Reproducir\n\n1. Abrir la página de login\n2. Ingresar credenciales válidas\n3. Click en el botón de inicio de sesión\n4. Observar el error o comportamiento inesperado\n\n## ✅ Comportamiento Esperado\n\nEl usuario debería poder:\n- Iniciar sesión con credenciales válidas\n- Recibir mensajes de error claros para credenciales incorrectas\n- Ser redirigido al dashboard después de login exitoso\n- Mantener la sesión activa durante el tiempo esperado",
+      "labels": ["bug", "authentication", "security", "critical"],
+      "priority": "high",
+      "assignee": "backend-team"
+    }
+  },
+  "button_issues": {
+    "keywords": ["botón", "button", "click", "presionar", "submit"],
+    "improvements": {
+      "description": "## 📝 Descripción del Problema\n\nEl usuario reporta que un botón específico no funciona como expected. Esto puede incluir que no responda al click, no realice la acción esperada, o presente un comportamiento incorrecto.\n\n## 🔧 Pasos para Reproducir\n\n1. Navegar a la página que contiene el botón\n2. Intentar hacer click en el botón\n3. Observar que no ocurre la acción esperada\n4. Verificar si hay errores en la consola del navegador\n\n## ✅ Comportamiento Esperado\n\nEl botón debería:\n- Responder visualmente al hover y click\n- Ejecutar la acción correspondiente (submit, navegación, etc.)\n- Mostrar indicadores de carga si es una operación asíncrona\n- Proporcionar feedback al usuario sobre el resultado",
+      "labels": ["bug", "ui", "interaction", "frontend"],
+      "priority": "medium",
+      "assignee": "frontend-team"
+    }
+  },
+  "performance_issues": {
+    "keywords": ["lento", "lentitud", "performance", "rápido", "tiempo", "carga"],
+    "improvements": {
+      "description": "## 📝 Descripción del Problema\n\nEl usuario reporta problemas de rendimiento que afectan la experiencia de uso. Esto puede incluir tiempos de carga lentos, respuestas tardías, o interfaz poco responsiva.\n\n## 🔧 Pasos para Reproducir\n\n1. Acceder a la funcionalidad afectada\n2. Medir el tiempo de respuesta\n3. Realizar las acciones típicas del usuario\n4. Observar los retrasos o comportamientos lentos\n\n## ✅ Comportamiento Esperado\n\nLa aplicación debería:\n- Cargar en menos de 3 segundos\n- Responder a interacciones en menos de 500ms\n- Mantener una interfaz fluida durante operaciones\n- Proporcionar indicadores de progreso para operaciones largas",
+      "labels": ["performance", "optimization", "enhancement"],
+      "priority": "medium",
+      "assignee": "backend-team"
+    }
+  },
+  "error_messages": {
+    "keywords": ["error", "mensaje", "exception", "fail", "fallo"],
+    "improvements": {
+      "description": "## 📝 Descripción del Problema\n\nEl usuario encuentra mensajes de error que no son claros, confusos, o no proporcionan información útil para resolver el problema.\n\n## 🔧 Pasos para Reproducir\n\n1. Realizar la acción que causa el error\n2. Observar el mensaje de error mostrado\n3. Evaluar la claridad y utilidad del mensaje\n4. Verificar si hay información de ayuda disponible\n\n## ✅ Comportamiento Esperado\n\nLos mensajes de error deberían:\n- Ser claros y fáciles de entender\n- Explicar qué salió mal\n- Sugerir cómo solucionar el problema\n- Proporcionar enlaces a ayuda o documentación\n- Usar un lenguaje amigable para el usuario",
+      "labels": ["bug", "ux", "documentation", "improvement"],
+      "priority": "low",
+      "assignee": "frontend-team"
+    }
+  },
+  "data_export": {
+    "keywords": ["exportar", "export", "descargar", "download", "csv", "pdf"],
+    "improvements": {
+      "description": "## 📝 Descripción del Problema\n\nEl usuario no puede exportar datos o la funcionalidad de exportación no funciona correctamente. Esto afecta la capacidad de los usuarios para obtener y analizar información fuera de la plataforma.\n\n## 🔧 Pasos para Reproducir\n\n1. Navegar a la sección de exportación\n2. Seleccionar el formato de exportación deseado\n3. Configurar los parámetros de exportación\n4. Intentar iniciar la exportación\n5. Observar el error o comportamiento incorrecto\n\n## ✅ Comportamiento Esperado\n\nLa exportación debería:\n- Ofrecer múltiples formatos (CSV, PDF, Excel)\n- Permitir personalizar los datos a exportar\n- Mostrar progreso durante exportaciones largas\n- Notificar cuando la exportación esté completa\n- Proporcionar descarga directa del archivo",
+      "labels": ["feature", "export", "data", "enhancement"],
+      "priority": "medium",
+      "assignee": "backend-team"
+    }
+  }
+}

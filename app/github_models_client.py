@@ -1,4 +1,4 @@
-"""GitHub Models API client for LLM integration."""
+"""AI Models API client for LLM integration (OpenAI compatible)."""
 
 import json
 import logging
@@ -13,21 +13,19 @@ logger = logging.getLogger(__name__)
 class GitHubModelsClient:
     """Client for GitHub Models API."""
 
-    def __init__(self, token: str, base_url: str = "https://models.github.ai"):
+    def __init__(self, token: str, base_url: str = "https://api.openai.com"):
         """Initialize GitHub Models client."""
         self.token = token
         self.base_url = base_url
         self.headers = {
             "Authorization": f"Bearer {token}",
             "Content-Type": "application/json",
-            "Accept": "application/vnd.github+json",
-            "X-GitHub-Api-Version": "2026-03-10",
         }
 
     async def chat_completion(
         self,
         messages: list[dict[str, str]],
-        model: str = "meta-llama/Meta-Llama-3-8B-Instruct",
+        model: str = "gpt-3.5-turbo",
         temperature: float = 0.7,
         max_tokens: int = 1000,
     ) -> str | None:
@@ -42,7 +40,7 @@ class GitHubModelsClient:
 
             async with httpx.AsyncClient() as client:
                 response = await client.post(
-                    f"{self.base_url}/inference/chat/completions",
+                    f"{self.base_url}/v1/chat/completions",
                     headers=self.headers,
                     json=payload,
                     timeout=30.0,
