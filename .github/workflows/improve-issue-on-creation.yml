@@ -3,6 +3,8 @@ name: Improve Issue on Creation with QAPilot
 on:
   issues:
     types: [opened, edited]
+  issue_comment:
+    types: [created]
 
 permissions:
   contents: write
@@ -15,7 +17,7 @@ env:
 jobs:
   improve-issue:
     runs-on: ubuntu-latest
-    if: (contains(github.event.issue.body, '/improve-issue') || contains(github.event.issue.body, '/improve-bug') || contains(github.event.issue.body, '/improve-story')) && github.event.issue.state == 'open' && !contains(github.event.issue.body, 'QAPilot improved this issue')
+    if: (github.event_name == 'issues' && (contains(github.event.issue.body, '/improve-issue') || contains(github.event.issue.body, '/improve-bug') || contains(github.event.issue.body, '/improve-story')) && github.event.issue.state == 'open' && !contains(github.event.issue.body, 'QAPilot improved this issue')) || (github.event_name == 'issue_comment' && contains(github.event.comment.body, '/improve-issue') && github.event.issue.state == 'open' && !contains(github.event.issue.body, 'QAPilot improved this issue'))
     
     steps:
       - name: Checkout repository
