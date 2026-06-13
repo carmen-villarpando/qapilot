@@ -660,7 +660,8 @@ Based on the provided title, this issue appears related to critical functionalit
         bug_keywords = [
             "bug", "error", "issue", "problem", "broken", "crash", "fail", "not working",
             "doesn't work", "incorrect", "wrong", "missing", "corrupt", "invalid",
-            "exception", "timeout", "freeze", "hang", "stuck", "blocked", "blocked"
+            "exception", "timeout", "freeze", "hang", "stuck", "blocked", "blocked",
+            "not loading", "loading", "crash", "freeze", "hang", "stuck", "blocked"
         ]
         return any(keyword in title_lower for keyword in bug_keywords)
 
