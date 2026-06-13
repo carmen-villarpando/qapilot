@@ -732,8 +732,10 @@ Based on the provided title, this issue appears related to critical functionalit
 *This issue has been analyzed by QAPilot's QA Lead perspective.*"""
 
     def _generate_improved_title(self, title: str) -> str:
-        """Generate an improved, more descriptive title."""
-        title_lower = title.lower()
+        """Generate an improved, more descriptive title with typo correction."""
+        # First correct typos and improve the title
+        corrected_title = self._correct_title_typos(title)
+        title_lower = corrected_title.lower()
         
         if "kanban" in title_lower and "not loading" in title_lower:
             return "Bug: Kanban board fails to load in Taiga project"
@@ -746,10 +748,187 @@ Based on the provided title, this issue appears related to critical functionalit
         elif "performance" in title_lower or "slow" in title_lower:
             return "Bug: Performance degradation affecting system responsiveness"
         else:
-            # Generic bug title improvement
+            # Generic bug title improvement with typo correction
             if "bug" not in title_lower:
-                return f"Bug: {title}"
-            return title.title()
+                return f"Bug: {corrected_title}"
+            return corrected_title.title()
+
+    def _correct_title_typos(self, title: str) -> str:
+        """Correct common typos and improve title formatting."""
+        import re
+        
+        # Common typo corrections
+        typo_corrections = {
+            # Project/app name typos
+            'taiga projet': 'Taiga project',
+            'taiga proyect': 'Taiga project',
+            'taiga projetc': 'Taiga project',
+            'taiga projet': 'Taiga project',
+            'taiga proj': 'Taiga project',
+            'taiga': 'Taiga',
+            
+            # Common word typos
+            'kanban bord': 'Kanban board',
+            'kanban bord': 'Kanban board',
+            'kanban bord': 'Kanban board',
+            'kanban bard': 'Kanban board',
+            'kanban': 'Kanban',
+            
+            'loding': 'loading',
+            'loadin': 'loading',
+            'laoding': 'loading',
+            'loaing': 'loading',
+            
+            'faild': 'failed',
+            'faild': 'failed',
+            'faile': 'failed',
+            'fail': 'failed',
+            
+            'brocken': 'broken',
+            'brocken': 'broken',
+            'broke': 'broken',
+            
+            'not woking': 'not working',
+            'not wroking': 'not working',
+            'not workin': 'not working',
+            'not wokring': 'not working',
+            
+            'perfomance': 'performance',
+            'perfromance': 'performance',
+            'preformance': 'performance',
+            'performace': 'performance',
+            
+            'authentiction': 'authentication',
+            'authenticaion': 'authentication',
+            'authentacation': 'authentication',
+            
+            'scroling': 'scrolling',
+            'scroling': 'scrolling',
+            'scroling': 'scrolling',
+            'scrooling': 'scrolling',
+            
+            'buton': 'button',
+            'buton': 'button',
+            'buton': 'button',
+            
+            'responce': 'response',
+            'respose': 'response',
+            'responce': 'response',
+            
+            'erorr': 'error',
+            'eror': 'error',
+            'erorr': 'error',
+            
+            'issu': 'issue',
+            'isue': 'issue',
+            'issu': 'issue',
+            
+            'problm': 'problem',
+            'problm': 'problem',
+            'proble': 'problem',
+            'problm': 'problem',
+            
+            'functonality': 'functionality',
+            'functinality': 'functionality',
+            'functonality': 'functionality',
+            'funcionality': 'functionality',
+            
+            'acces': 'access',
+            'acess': 'access',
+            'acces': 'access',
+            
+            'user': 'user',
+            'usr': 'user',
+            'useer': 'user',
+            
+            'systm': 'system',
+            'systm': 'system',
+            'systme': 'system',
+            'systm': 'system',
+            
+            'interfac': 'interface',
+            'interfce': 'interface',
+            'interfac': 'interface',
+            
+            'naviagation': 'navigation',
+            'naviagtion': 'navigation',
+            'naviagation': 'navigation',
+            
+            'behavoir': 'behavior',
+            'behavoir': 'behavior',
+            'behavour': 'behavior',
+            
+            'expcted': 'expected',
+            'expeted': 'expected',
+            'expcted': 'expected',
+            
+            'reproduc': 'reproduce',
+            'reproduc': 'reproduce',
+            'reproduc': 'reproduce',
+            
+            'environmnt': 'environment',
+            'environmnt': 'environment',
+            'environmet': 'environment',
+            
+            'prority': 'priority',
+            'prority': 'priority',
+            'priorty': 'priority',
+            
+            'impact': 'impact',
+            'impct': 'impact',
+            'imact': 'impact',
+            
+            'step': 'step',
+            'stp': 'step',
+            'ste': 'step',
+            
+            'descripion': 'description',
+            'descripion': 'description',
+            'descripton': 'description',
+            
+            'actual': 'actual',
+            'actul': 'actual',
+            'actal': 'actual',
+            
+            'behvior': 'behavior',
+            'behvior': 'behavior',
+            'behavour': 'behavior',
+        }
+        
+        # Apply typo corrections
+        corrected = title
+        for typo, correction in typo_corrections.items():
+            corrected = re.sub(rf'\b{re.escape(typo)}\b', correction, corrected, flags=re.IGNORECASE)
+        
+        # Fix spacing and capitalization
+        corrected = self._fix_title_formatting(corrected)
+        
+        return corrected
+
+    def _fix_title_formatting(self, title: str) -> str:
+        """Fix spacing, capitalization, and general formatting."""
+        import re
+        
+        # Remove extra spaces
+        title = re.sub(r'\s+', ' ', title.strip())
+        
+        # Capitalize first letter of each word (but keep technical terms consistent)
+        words = title.split()
+        formatted_words = []
+        
+        for word in words:
+            word_lower = word.lower()
+            
+            # Keep technical terms in consistent case
+            if word_lower in ['taiga', 'kanban', 'github', 'api', 'ui', 'ux']:
+                formatted_words.append(word.title())
+            elif word_lower in ['qa', 'pm', 'po']:
+                formatted_words.append(word.upper())
+            else:
+                # Capitalize first letter
+                formatted_words.append(word.capitalize())
+        
+        return ' '.join(formatted_words)
 
     def _generate_structured_description(self, title: str, detected_app: str, detected_role: str) -> str:
         """Generate structured description with assumptions clearly stated."""
@@ -1254,8 +1433,10 @@ feature, user-story, {detected_app.lower()}, product-backlog, ready-for-developm
 *This requirement has been analyzed by QAPilot's Product Owner perspective. All assumptions should be validated with stakeholders before development begins.*"""
 
     def _generate_story_title(self, title: str) -> str:
-        """Generate improved title for user stories."""
-        title_lower = title.lower()
+        """Generate improved title for user stories with typo correction."""
+        # First correct typos and improve the title
+        corrected_title = self._correct_title_typos(title)
+        title_lower = corrected_title.lower()
         
         if "kanban" in title_lower and ("add" in title_lower or "create" in title_lower or "implement" in title_lower):
             return "Feature: Add kanban board functionality to Taiga project"
@@ -1268,10 +1449,10 @@ feature, user-story, {detected_app.lower()}, product-backlog, ready-for-developm
         elif "performance" in title_lower and ("improve" in title_lower or "optimize" in title_lower):
             return "Feature: Performance optimization for enhanced user experience"
         else:
-            # Generic feature title improvement
+            # Generic feature title improvement with typo correction
             if "feature" not in title_lower and "story" not in title_lower:
-                return f"Feature: {title}"
-            return title.title()
+                return f"Feature: {corrected_title}"
+            return corrected_title.title()
 
     def _generate_user_story(self, title: str, detected_app: str, detected_role: str) -> str:
         """Generate user story in standard format."""
