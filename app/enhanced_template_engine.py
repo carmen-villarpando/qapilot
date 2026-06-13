@@ -825,6 +825,13 @@ Based on the provided title, this issue appears related to critical functionalit
         """Correct common typos and improve title formatting."""
         import re
         
+        # Apply specific typo corrections first (more aggressive)
+        corrected = title
+        
+        # Fix common short typos that don't work well with word boundaries
+        corrected = re.sub(r'\bTh\b', 'The', corrected, flags=re.IGNORECASE)
+        corrected = re.sub(r'\bTh\b', 'The', corrected)  # Ensure it works
+        
         # Common typo corrections - more conservative approach
         typo_corrections = {
             # Common typos
@@ -881,10 +888,26 @@ Based on the provided title, this issue appears related to critical functionalit
             'actul': 'actual',
             'actal': 'actual',
             'behvior': 'behavior',
+            'dont': "doesn't",
+            'wont': "won't",
+            'cant': "can't",
+            'didnt': "didn't",
+            'doesnt': "doesn't",
+            'isnt': "isn't",
+            'arent': "aren't",
+            'wasnt': "wasn't",
+            'werent': "weren't",
+            'havent': "haven't",
+            'hasnt': "hasn't",
+            'wont': "won't",
+            'couldnt': "couldn't",
+            'shouldnt': "shouldn't",
+            'wouldnt': "wouldn't",
+            'mightnt': "mightn't",
+            'mustnt': "mustn't",
         }
         
         # Apply typo corrections
-        corrected = title
         for typo, correction in typo_corrections.items():
             corrected = re.sub(rf'\b{re.escape(typo)}\b', correction, corrected, flags=re.IGNORECASE)
         
