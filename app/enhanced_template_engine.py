@@ -347,12 +347,15 @@ Based on the provided title, this issue appears related to critical functionalit
         # Extract features mentioned in the title
         mentioned_features = self.terminology_manager.extract_features_from_text(title, detected_app)
         
+        # Generate contextual description based on title analysis
+        contextual_description = self._generate_contextual_description(title, detected_app, detected_role, mentioned_features)
+        
         # Add app-specific terminology and feature validation
         app_enhanced_description = self.terminology_manager.enhance_description_with_validation(
-            f"Team member reports: \"{title}\"", detected_app, mentioned_features
+            contextual_description, detected_app, mentioned_features
         )
         
-        description = f"""## 📝 Problem Description
+        description = f"""## 📝 Description
 
 {app_enhanced_description}
 
@@ -364,22 +367,15 @@ Based on the provided title, this issue appears related to critical functionalit
 
 ### 🔧 Steps to Reproduce
 
-1. Access the affected functionality
-2. Identify the specific problem scenario
-3. Reproduce the undesired behavior
-4. Document the observed results
+{self._generate_contextual_steps(title, detected_app, detected_role)}
 
 ### ✅ Expected Behavior
 
-The system should function efficiently and predictably, providing a positive experience for team members.
+{self._generate_contextual_expected_behavior(title, detected_app, detected_role)}
 
 ### 📊 Acceptance Criteria
 
-- [ ] The problem is clearly identified
-- [ ] It can be reproduced consistently
-- [ ] An effective solution is implemented
-- [ ] The solution is verified and tested
-- [ ] No new problems are introduced
+{self._generate_contextual_acceptance_criteria(title, detected_app, detected_role)}
 """
         
         # Get app-specific labels
@@ -436,3 +432,218 @@ The system should function efficiently and predictably, providing a positive exp
             return "medium"
         else:
             return "high"
+
+    def _generate_contextual_description(self, title: str, detected_app: str, detected_role: str, mentioned_features: List[str]) -> str:
+        """Generate contextual description based on title analysis."""
+        title_lower = title.lower()
+        
+        # Analyze title for specific patterns and generate rich description
+        if "kanban" in title_lower and "taiga" in title_lower:
+            return """Team member reports that when attempting to access an active kanban board in the Taiga project, the board fails to load properly. This critical issue prevents team members from viewing the current workflow status, tracking progress on user stories, and managing task assignments across different swimlanes. The loading failure appears to affect the main kanban view, potentially impacting sprint planning and daily standup activities."""
+        
+        elif "login" in title_lower or "authentication" in title_lower:
+            return """Team member experiences authentication issues when attempting to access the system. This problem prevents users from logging in securely, potentially blocking access to critical project functionality and compromising the user experience. The authentication failure may be related to credential validation, session management, or connectivity with the authentication service."""
+        
+        elif "scroll" in title_lower or "scrolling" in title_lower:
+            return """Team member reports scrolling functionality is not working correctly in the interface. This issue affects user navigation and content accessibility, particularly when trying to view content that extends beyond the visible viewport. The scrolling problem impacts user experience and may prevent users from accessing important information or completing essential tasks."""
+        
+        elif "button" in title_lower or "click" in title_lower:
+            return """Team member reports that interactive buttons are not responding to user clicks or are not performing their intended actions. This issue prevents users from completing critical workflows, submitting forms, or navigating through the application interface. The button malfunction may be related to event handling, JavaScript execution, or CSS styling problems."""
+        
+        elif "performance" in title_lower or "slow" in title_lower or "lag" in title_lower:
+            return """Team member reports significant performance issues affecting system responsiveness. The application is experiencing slow load times, delayed responses to user actions, or general performance degradation that impacts productivity. These performance bottlenecks may be related to database queries, API calls, frontend rendering, or resource optimization."""
+        
+        else:
+            # Generic but contextual description
+            return f"""Team member reports an issue with {detected_app} that requires immediate attention. This problem affects the normal operation of the system and may impact team productivity and project deliverables. The issue needs to be investigated and resolved to ensure smooth workflow continuation and maintain system reliability."""
+
+    def _generate_contextual_steps(self, title: str, detected_app: str, detected_role: str) -> str:
+        """Generate contextual reproduction steps based on title analysis."""
+        title_lower = title.lower()
+        
+        if "kanban" in title_lower and "taiga" in title_lower:
+            return """1. Log in to the Taiga application
+2. Navigate to the affected project
+3. Click on the "Kanban" tab or board view
+4. Observe that the board fails to load or displays loading spinner indefinitely
+5. Try refreshing the page to verify if the issue persists
+6. Check browser console for any JavaScript errors
+7. Test with different browsers to isolate the problem"""
+        
+        elif "login" in title_lower or "authentication" in title_lower:
+            return """1. Navigate to the application login page
+2. Enter valid credentials (username/email and password)
+3. Click the login button or press Enter
+4. Observe the authentication process and any error messages
+5. Check if the page redirects correctly after successful login
+6. Verify network connectivity and browser console for errors
+7. Test with different user accounts if available"""
+        
+        elif "scroll" in title_lower or "scrolling" in title_lower:
+            return """1. Navigate to the page or section with scrolling issues
+2. Attempt to scroll using mouse wheel, trackpad, or keyboard arrows
+3. Observe if the content moves or remains static
+4. Test horizontal and vertical scrolling separately
+5. Check if scrollbars appear when content overflows
+6. Test on different screen sizes and devices
+7. Verify browser developer tools for CSS issues"""
+        
+        elif "button" in title_lower or "click" in title_lower:
+            return """1. Navigate to the page containing the affected button
+2. Attempt to click the button using mouse or touch
+3. Observe if any visual feedback occurs (hover, active states)
+4. Check browser console for JavaScript errors
+5. Verify if the button is properly enabled and not disabled
+6. Test keyboard navigation (Tab to button, Enter/Space to activate)
+7. Check if button event listeners are properly attached"""
+        
+        elif "performance" in title_lower or "slow" in title_lower or "lag" in title_lower:
+            return """1. Navigate to the affected page or feature
+2. Measure initial load time using browser dev tools
+3. Monitor network requests and their response times
+4. Check CPU and memory usage during operation
+5. Test with different amounts of data or content
+6. Profile JavaScript execution time if applicable
+7. Compare performance across different browsers and devices"""
+        
+        else:
+            return """1. Navigate to the affected area of the application
+2. Identify the specific functionality that is not working
+3. Attempt to reproduce the issue with different inputs
+4. Document the exact steps that trigger the problem
+5. Check for any error messages or unusual behavior
+6. Verify the issue occurs consistently
+7. Gather relevant logs or debugging information"""
+
+    def _generate_contextual_expected_behavior(self, title: str, detected_app: str, detected_role: str) -> str:
+        """Generate contextual expected behavior based on title analysis."""
+        title_lower = title.lower()
+        
+        if "kanban" in title_lower and "taiga" in title_lower:
+            return """The kanban board should load quickly and display all project columns (swimlanes) with their respective user stories and tasks. Users should be able to:
+- View all columns and their cards clearly
+- Drag and drop cards between columns
+- Filter and search for specific items
+- Access card details by clicking on them
+- See real-time updates when team members make changes
+- Experience smooth scrolling and responsive interactions"""
+        
+        elif "login" in title_lower or "authentication" in title_lower:
+            return """The authentication system should work seamlessly and securely:
+- Users should be able to log in with valid credentials
+- The login process should complete within 2-3 seconds
+- Invalid credentials should show clear, helpful error messages
+- Successful login should redirect to the appropriate dashboard
+- Session should persist appropriately without requiring frequent re-login
+- Two-factor authentication should work if enabled
+- Password reset functionality should be accessible and functional"""
+        
+        elif "scroll" in title_lower or "scrolling" in title_lower:
+            return """Scrolling should work smoothly and intuitively across all content areas:
+- Mouse wheel scrolling should work at appropriate speed
+- Touchpad scrolling should support natural gestures
+- Keyboard navigation (arrow keys, space, page up/down) should function
+- Scrollbars should appear when content overflows viewport
+- Momentum scrolling should work on touch devices
+- Scroll performance should maintain 60fps during movement
+- Content should snap appropriately to sections or items when designed"""
+        
+        elif "button" in title_lower or "click" in title_lower:
+            return """Buttons should respond immediately and reliably to user interactions:
+- Visual feedback should appear on hover (color change, underline, etc.)
+- Active state should show when button is pressed
+- Click should trigger the intended action without delay
+- Buttons should be accessible via keyboard navigation
+- Loading states should show for async operations
+- Disabled buttons should be clearly visually indicated
+- Touch targets should be at least 44x44px for mobile accessibility"""
+        
+        elif "performance" in title_lower or "slow" in title_lower or "lag" in title_lower:
+            return """The application should perform optimally with responsive interactions:
+- Page loads should complete within 2-3 seconds
+- User interactions should respond within 100ms
+- Animations should maintain 60fps performance
+- Memory usage should remain stable without leaks
+- Network requests should be optimized and cached appropriately
+- Database queries should execute efficiently
+- The application should handle concurrent users without degradation"""
+        
+        else:
+            return f"""The {detected_app} system should function reliably and efficiently:
+- All features should work as designed and documented
+- User interactions should be responsive and intuitive
+- Error handling should be graceful and informative
+- The system should maintain data integrity and consistency
+- Performance should meet acceptable standards for the user base
+- Security measures should protect user data and system access
+- The user interface should be accessible and user-friendly"""
+
+    def _generate_contextual_acceptance_criteria(self, title: str, detected_app: str, detected_role: str) -> str:
+        """Generate contextual acceptance criteria based on title analysis."""
+        title_lower = title.lower()
+        
+        if "kanban" in title_lower and "taiga" in title_lower:
+            return """- [ ] Kanban board loads completely within 3 seconds
+- [ ] All project columns and swimlanes are displayed correctly
+- [ ] User stories and tasks appear in their appropriate columns
+- [ ] Drag and drop functionality works between columns
+- [ ] Card details can be accessed by clicking on items
+- [ ] Real-time updates reflect changes from other team members
+- [ ] Board works correctly on desktop and mobile devices
+- [ ] No JavaScript errors appear in browser console
+- [ ] Scrolling is smooth and responsive throughout the board"""
+        
+        elif "login" in title_lower or "authentication" in title_lower:
+            return """- [ ] Users can successfully log in with valid credentials
+- [ ] Login process completes within 3 seconds
+- [ ] Clear error messages appear for invalid credentials
+- [ ] Successful login redirects to appropriate dashboard
+- [ ] Session persists for expected duration without issues
+- [ ] Password reset functionality works end-to-end
+- [ ] Two-factor authentication works if enabled
+- [ ] Login works across different browsers and devices
+- [ ] Security measures prevent unauthorized access"""
+        
+        elif "scroll" in title_lower or "scrolling" in title_lower:
+            return """- [ ] Mouse wheel scrolling works smoothly and responsively
+- [ ] Touchpad gestures work with natural scrolling behavior
+- [ ] Keyboard navigation (arrows, space, page up/down) functions properly
+- [ ] Scrollbars appear when content exceeds viewport dimensions
+- [ ] Momentum scrolling works on touch devices
+- [ ] Scroll performance maintains 60fps during movement
+- [ ] Content snap points work as designed
+- [ ] Scrolling works consistently across different browsers
+- [ ] No layout shifts occur during scrolling"""
+        
+        elif "button" in title_lower or "click" in title_lower:
+            return """- [ ] Buttons respond immediately to user clicks
+- [ ] Visual feedback appears on hover and active states
+- [ ] Intended actions trigger correctly without errors
+- [ ] Buttons are accessible via keyboard navigation
+- [ ] Loading states show for async operations
+- [ ] Disabled buttons are clearly visually indicated
+- [ ] Touch targets meet minimum 44x44px requirement
+- [ ] Buttons work consistently across different browsers
+- [ ] No JavaScript errors occur on button interactions"""
+        
+        elif "performance" in title_lower or "slow" in title_lower or "lag" in title_lower:
+            return """- [ ] Page loads complete within 3 seconds on standard connection
+- [ ] User interactions respond within 100ms
+- [ ] Animations maintain 60fps performance consistently
+- [ ] Memory usage remains stable during extended use
+- [ ] Network requests are optimized and properly cached
+- [ ] Database queries execute efficiently with proper indexing
+- [ ] System handles concurrent users without performance degradation
+- [ ] Core Web Vitals meet recommended thresholds
+- [ ] No memory leaks detected during testing"""
+        
+        else:
+            return f"""- [ ] The reported issue is clearly identified and understood
+- [ ] The problem can be reproduced consistently
+- [ ] Root cause analysis identifies the underlying issue
+- [ ] Solution addresses the problem without introducing new issues
+- [ ] Fix is tested thoroughly across different scenarios
+- [ ] Performance impact is acceptable and within standards
+- [ ] Documentation is updated to reflect changes made
+- [ ] Team members are trained on any new processes or features
+- [ ] Monitoring is in place to prevent future occurrences"""
