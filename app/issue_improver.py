@@ -109,7 +109,10 @@ class IssueImprover:
             # Extract labels
             labels = []
             if improvements.get("labels"):
-                labels = [label.strip() for label in improvements["labels"].split(",")]
+                if isinstance(improvements["labels"], list):
+                    labels = improvements["labels"]
+                else:
+                    labels = [label.strip() for label in improvements["labels"].split(",")]
                 labels = [label for label in labels if label]  # Remove empty
 
             # Update issue

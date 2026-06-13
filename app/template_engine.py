@@ -11,7 +11,7 @@ logger = logging.getLogger(__name__)
 class TemplateEngine:
     """Template-based engine for issue improvements."""
 
-    def __init__(self, templates_file: str = "app/data/issue_templates.json"):
+    def __init__(self, templates_file: str = "data/issue_templates.json"):
         """Initialize template engine."""
         self.templates_file = templates_file
         self.templates = self._load_templates()
