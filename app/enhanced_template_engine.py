@@ -801,7 +801,9 @@ Based on the provided title, this issue appears related to critical functionalit
 **Priority:** {self._assess_bug_priority(title)}
 **Impact:** {self._assess_bug_impact(title)}
 
----"""
+---
+
+*This issue has been analyzed by QAPilot's QA Lead perspective.*""
 
     def _generate_improved_title(self, title: str) -> str:
         """Generate an improved title with typo correction, preserving original intent."""
@@ -1492,7 +1494,9 @@ feature, user-story, {detected_app.lower()}, product-backlog, ready-for-developm
 **Development Effort:** {self._assess_development_effort(title)}
 **Priority:** {self._assess_story_priority(title)}
 
----"""
+---
+
+*This requirement has been analyzed by QAPilot's Product Owner perspective.*""
 
     def _generate_story_title(self, title: str) -> str:
         """Generate improved title for user stories with typo correction, preserving original intent."""

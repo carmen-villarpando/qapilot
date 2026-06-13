@@ -225,10 +225,8 @@ class IssueImprover:
             improved_description = improvements['description']
             logger.info(f"Using improved description (first 300 chars): {improved_description[:300]}...")
             
-            # Add QAPilot signature if not already present
-            if "QAPilot improved this issue" not in improved_description:
-                improved_description += "\n\n---\n\n*QAPilot improved this issue*"
-                logger.info("Added QAPilot signature")
+            # Templates already include signatures, no need to add duplicate
+            logger.info("Using template signature (no duplicate added)")
             
             # For forced commands (/improve-bug, /improve-story), use only improved description
             # For auto-detection (/improve-issue), combine if there's meaningful original content

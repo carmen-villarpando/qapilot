@@ -1,4 +1,4 @@
-name: Improve Issue with QAPilot
+name: Improve Story with QAPilot
 
 on:
   issue_comment:
@@ -13,9 +13,9 @@ env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
 jobs:
-  improve-issue:
+  improve-story:
     runs-on: ubuntu-latest
-    if: contains(github.event.comment.body, '/improve-issue') && github.event.issue.state == 'open' && !contains(github.event.issue.body, 'QAPilot improved this issue') && github.event.action == 'created' && github.event_name == 'issue_comment'
+    if: contains(github.event.comment.body, '/improve-story') && github.event.issue.state == 'open' && !contains(github.event.issue.body, 'QAPilot improved this issue') && github.event.action == 'created' && github.event_name == 'issue_comment'
     
     steps:
       - name: Checkout repository
@@ -26,22 +26,20 @@ jobs:
         with:
           python-version: '3.11'
           
-      - name: Install uv
-        uses: astral-sh/setup-uv@v3
-        with:
-          version: "latest"
-          
       - name: Install dependencies
         run: |
-          uv sync
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
           
-      - name: Improve issue
+      - name: Improve story issue
         env:
-          GITHUB_TOKEN: ${{ secrets.QAPILOT_GITHUB_TOKEN }}
-          GITHUB_MODELS_TOKEN: ${{ secrets.QAPILOT_MODELS_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          MODELS_TOKEN: ${{ secrets.MODELS_TOKEN }}
           REPO_NAME: ${{ github.repository }}
           ISSUE_NUMBER: ${{ github.event.issue.number }}
+          ISSUE_BODY: ${{ github.event.issue.body }}
+          ISSUE_AUTHOR: ${{ github.event.issue.user.login }}
           COMMENT_BODY: ${{ github.event.comment.body }}
           COMMENT_AUTHOR: ${{ github.event.comment.user.login }}
         run: |
-          cd app && uv run python -m main_improve_issue
+          python app/main_improve_issue_comment.py
