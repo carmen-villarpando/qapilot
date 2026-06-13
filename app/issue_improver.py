@@ -178,7 +178,10 @@ class IssueImprover:
 
     def _build_improved_body(self, current_body: str, improvements: dict[str, Any]) -> str:
         """Build improved issue body."""
-        new_body = current_body
+        # Clean /improve-issue command from current body
+        cleaned_body = re.sub(r'/improve-issue', '', current_body, flags=re.IGNORECASE).strip()
+        
+        new_body = cleaned_body
 
         # Add structured sections if they don't exist
         sections = []
