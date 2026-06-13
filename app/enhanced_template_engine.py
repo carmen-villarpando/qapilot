@@ -848,6 +848,26 @@ Based on the provided title, this issue appears related to critical functionalit
             r'\bwouldnt\b': "wouldn't",
         }
         
+        # Fix common technical typos that similarity struggles with
+        technical_fixes = {
+            r'\bdashboa\b': 'dashboard',
+            r'\bdashbord\b': 'dashboard',
+            r'\bdashbord\b': 'dashboard',
+            r'\bsistem\b': 'system',
+            r'\berorr\b': 'error',
+            r'\beror\b': 'error',
+            r'\bmodul\b': 'modal',
+            r'\bmodle\b': 'modal',
+            r'\bpannel\b': 'panel',
+            r'\bpannel\b': 'panel',
+            r'\bnaviagation\b': 'navigation',
+            r'\bnaviagtion\b': 'navigation',
+        }
+        
+        # Apply technical fixes first
+        for pattern, replacement in technical_fixes.items():
+            corrected = re.sub(pattern, replacement, corrected, flags=re.IGNORECASE)
+        
         for pattern, replacement in contraction_fixes.items():
             corrected = re.sub(pattern, replacement, corrected, flags=re.IGNORECASE)
         
@@ -1045,11 +1065,11 @@ Based on the provided title, this issue appears related to critical functionalit
                 formatted_words.append(word.title())
             elif word_lower in ['qa', 'pm', 'po', 'ui', 'ux']:
                 formatted_words.append(word.upper())
-            # Keep words that start with capital letter (likely proper nouns)
-            elif word_original[0].isupper() and len(word_original) > 1:
-                formatted_words.append(word_original)
+            # Keep words that start with capital letter and are in our proper nouns list
+            elif word_original[0].isupper() and len(word_original) > 1 and word_lower in ['github', 'api', 'ui', 'ux', 'javascript', 'python', 'css', 'html', 'taiga', 'kanban']:
+                formatted_words.append(word.title())
             else:
-                # Keep as lowercase for normal words
+                # Convert to lowercase for normal words (this is the key fix)
                 formatted_words.append(word_lower)
         
         return ' '.join(formatted_words)
