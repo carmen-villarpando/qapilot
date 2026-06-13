@@ -6,7 +6,6 @@ import os
 import sys
 
 from issue_improver import IssueImprover
-from template_engine import TemplateEngine
 
 # Configure logging
 logging.basicConfig(

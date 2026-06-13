@@ -5,7 +5,7 @@ import re
 from typing import Any
 
 from github_client import GitHubClient
-from template_engine import TemplateEngine
+from enhanced_template_engine import EnhancedTemplateEngine
 
 logger = logging.getLogger(__name__)
 
@@ -13,7 +13,7 @@ logger = logging.getLogger(__name__)
 class IssueImprover:
     """Main class for improving GitHub issues."""
 
-    def __init__(self, github_client: GitHubClient, template_engine: TemplateEngine):
+    def __init__(self, github_client: GitHubClient, template_engine: EnhancedTemplateEngine):
         """Initialize issue improver."""
         self.github_client = github_client
         self.template_engine = template_engine
@@ -49,8 +49,8 @@ class IssueImprover:
         # Get repository context
         repo_context = await self._get_repo_context(repo_name)
 
-        # Generate improvements using templates
-        improvements = self.template_engine.improve_issue(title, repo_context)
+        # Generate improvements using templates with app terminology
+        improvements = self.template_engine.improve_issue(title, repo_context, repo_name)
         if not improvements:
             logger.error("Failed to generate improvements")
             await self._add_error_comment(repo_name, issue_number)
@@ -97,8 +97,8 @@ class IssueImprover:
         # Get repository context
         repo_context = await self._get_repo_context(repo_name)
 
-        # Generate improvements using templates
-        improvements = self.template_engine.improve_issue(title, repo_context)
+        # Generate improvements using templates with app terminology
+        improvements = self.template_engine.improve_issue(title, repo_context, repo_name)
         if not improvements:
             logger.error("Failed to generate improvements")
             await self._add_error_comment(repo_name, issue_number)
@@ -251,5 +251,5 @@ class IssueImprover:
     def from_env() -> "IssueImprover":
         """Create IssueImprover from environment variables."""
         github_client = GitHubClient.from_env()
-        template_engine = TemplateEngine()
+        template_engine = EnhancedTemplateEngine()
         return IssueImprover(github_client, template_engine)

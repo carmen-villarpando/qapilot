@@ -1,0 +1,98 @@
+{
+  "scroll_issues": {
+    "keywords": ["scroll", "scrolling", "desplazar", "scrollbar", "scrolling"],
+    "role": "qa_manager",
+    "external_docs": [
+      "https://developer.mozilla.org/en-US/docs/Web/CSS/overflow",
+      "https://web.dev/scroll-driven-animations/"
+    ],
+    "improvements": {
+      "description": "## 📝 Descripción del Problema\n\nEl miembro del equipo reporta problemas con el scroll en la interfaz. Este issue afecta la experiencia de navegación del miembro al intentar acceder a contenido que excede el área visible de la pantalla.\n\n### 🎯 Impacto en el Usuario\n- **Experiencia de navegación:** Dificultad para acceder a contenido completo\n- **Accesibilidad:** Posibles barreras para usuarios con discapacidades\n- **Conversiones:** Riesgo de abandono por frustración\n\n### 🔍 Contexto Técnico\nBasado en las mejores prácticas de [MDN Web Docs](https://developer.mozilla.org/en-US/docs/Web/CSS/overflow) y [Web.dev](https://web.dev/scroll-driven-animations/), el scroll debe implementarse con propiedades CSS adecuadas y consideraciones de rendimiento.\n\n## 🔧 Pasos para Reproducir\n\n1. Acceder a la aplicación/sitio web\n2. Navegar a la sección afectada\n3. Intentar hacer scroll vertical u horizontal\n4. Observar que el scroll no responde o funciona incorrectamente\n5. Verificar comportamiento en diferentes dispositivos (desktop, mobile, tablet)\n6. Probar con diferentes navegadores (Chrome, Firefox, Safari)\n\n## ✅ Comportamiento Esperado\n\nEl miembro debería poder desplazarse suavemente por todo el contenido utilizando:\n- **Rueda del mouse** con velocidad configurable\n- **Trackpad** con gestos naturales\n- **Barra de scroll** visible y accesible\n- **Gestos táctiles** (en dispositivos móviles)\n- **Teclado** (flechas, space, page up/down)\n\n### 📊 Métricas de Rendimiento\n- **FPS mantenido:** 60fps durante scroll\n- **Latencia:** <16ms por frame\n- **Smooth scrolling:** Natural y sin saltos\n- **Touch responsive:** <100ms de respuesta\n\n### 🎨 Consideraciones de UX\n- Scroll suave con CSS `scroll-behavior: smooth`\n- Indicadores visuales de contenido adicional\n- Momentum scrolling en dispositivos táctiles\n- Snap points para secciones importantes\n\n## 🏷️ Criterios de Aceptación\n\n- [ ] El scroll funciona en todas las direcciones necesarias\n- [ ] Mantiene 60fps durante scroll continuo\n- [ ] Funciona en dispositivos móviles y desktop\n- [ ] Los controles son accesibles por teclado\n- [ ] No hay contenido inaccesible por scroll defectuoso\n- [ ] El scroll es intuitivo y natural",
+      "labels": ["bug", "ui", "scrolling", "user-experience", "accessibility", "performance"],
+      "priority": "medium",
+      "assignee": "frontend-team",
+      "estimated_hours": 8,
+      "complexity": "medium"
+    }
+  },
+  "login_issues": {
+    "keywords": ["login", "signin", "autenticación", "acceso", "sesión"],
+    "role": "security_engineer",
+    "external_docs": [
+      "https://owasp.org/www-project-cheat-sheets/cheatsheets/Authentication_Cheat_Sheet.html",
+      "https://developer.mozilla.org/en-US/docs/Web/HTTP/Authentication"
+    ],
+    "improvements": {
+      "description": "## 📝 Descripción del Problema\n\nEl miembro del equipo experimenta dificultades al intentar iniciar sesión en la aplicación. Este problema impide el acceso a funcionalidades restringidas y afecta directamente la experiencia del miembro.\n\n### 🛡️ Impacto en Seguridad\n- **Autenticación:** Barrera de acceso al sistema\n- **Datos del miembro:** Riesgo de exposición si hay vulnerabilidades\n- **Cumplimiento:** Posibles problemas de regulación (GDPR, etc.)\n\n### 🔍 Contexto Técnico\nSegún las guías de [OWASP Authentication Cheat Sheet](https://owasp.org/www-project-cheat-sheets/cheatsheets/Authentication_Cheat_Sheet.html), la autenticación debe implementarse con múltiples capas de seguridad y consideraciones de experiencia.\n\n## 🔧 Pasos para Reproducir\n\n1. Abrir la página de login\n2. Ingresar credenciales válidas\n3. Click en el botón de inicio de sesión\n4. Observar el error o comportamiento inesperado\n5. Verificar errores en consola del navegador\n6. Revisar logs del servidor para autenticación\n7. Probar con diferentes navegadores\n\n## ✅ Comportamiento Esperado\n\nEl miembro debería poder:\n- **Iniciar sesión** con credenciales válidas\n- **Recibir feedback** inmediato sobre el estado del login\n- **Ver mensajes de error** claros y específicos para credenciales incorrectas\n- **Ser redirigido** al dashboard después de login exitoso\n- **Mantener la sesión** activa durante el tiempo esperado\n- **Cerrar sesión** de forma segura\n\n### 🔐 Requisitos de Seguridad\n- **Password hashing:** Bcrypt o superior\n- **Rate limiting:** Máximo 5 intentos por minuto\n- **Session management:** Tokens JWT con expiración\n- **HTTPS obligatorio:** Sin excepciones\n- **Two-factor auth:** Opcional pero recomendado\n\n### 📊 Métricas de Experiencia\n- **Tiempo de respuesta:** <2 segundos\n- **Disponibilidad:** 99.9% uptime\n- **Tasa de éxito:** >95% first-time login\n- **Soporte móvil:** Responsive design\n\n## 🏷️ Criterios de Aceptación\n\n- [ ] Login funciona con credenciales válidas\n- [ ] Mensajes de error claros y específicos\n- [ ] Redirección correcta post-login\n- [ ] Session management implementado\n- [ ] Rate limiting activo\n- [ ] Logs de auditoría completos\n- [ ] Mobile responsive",
+      "labels": ["bug", "authentication", "security", "critical", "backend", "compliance"],
+      "priority": "high",
+      "assignee": "backend-team",
+      "estimated_hours": 12,
+      "complexity": "high"
+    }
+  },
+  "button_issues": {
+    "keywords": ["botón", "button", "click", "presionar", "submit"],
+    "role": "frontend_engineer",
+    "external_docs": [
+      "https://web.dev/button-best-practices/",
+      "https://www.w3.org/WAI/WCAG21/Understanding/button-name.html"
+    ],
+    "improvements": {
+      "description": "## 📝 Descripción del Problema\n\nEl miembro del equipo reporta que un botón específico no funciona como expected. Esto puede incluir que no responda al click, no realice la acción esperada, o presente un comportamiento incorrecto.\n\n### 🎯 Impacto en la Experiencia\n- **Flujo de usuario:** Interrupción de tareas críticas\n- **Conversión:** Pérdida de acciones importantes\n- **Accesibilidad:** Barreras para usuarios con discapacidades\n\n### 🔍 Contexto Técnico\nBasado en [Web.dev Button Best Practices](https://web.dev/button-best-practices/) y estándares [WCAG](https://www.w3.org/WAI/WCAG21/Understanding/button-name.html), los botones deben ser accesibles, responsivos y predecibles.\n\n## 🔧 Pasos para Reproducir\n\n1. Navegar a la página que contiene el botón\n2. Intentar hacer click en el botón\n3. Observar que no ocurre la acción esperada\n4. Verificar si hay errores en la consola del navegador\n5. Probar con diferentes navegadores\n6. Verificar comportamiento en dispositivos móviles\n7. Testear accesibilidad por teclado\n\n## ✅ Comportamiento Esperado\n\nEl botón debería:\n- **Responder visualmente** al hover y click con estados claros\n- **Ejecutar la acción** correspondiente (submit, navegación, etc.)\n- **Mostrar indicadores** de carga si es una operación asíncrona\n- **Proporcionar feedback** inmediato sobre el resultado\n- **Ser accesible** por teclado y screen readers\n- **Tener texto descriptivo** claro y conciso\n\n### 🎨 Consideraciones de UX/UI\n- **Estado hover:** Cambio visual claro al pasar el mouse\n- **Estado active:** Feedback visual al hacer click\n- **Estado disabled:** Visualmente claro cuando está deshabilitado\n- **Loading state:** Spinner o indicador de progreso\n- **Micro-interacciones:** Animaciones sutiles y naturales\n\n### 📱 Mobile Considerations\n- **Touch target:** Mínimo 44x44px\n- **Tap feedback:** Respuesta táctil inmediata\n- **Gestos:** Soporte para gestos comunes\n- **Contraste:** Cumplimiento WCAG AA\n\n### ♿ Accesibilidad\n- **ARIA labels:** Descriptivos y útiles\n- **Keyboard navigation:** Tab order lógico\n- **Screen reader:** Anuncios de estado\n- **Focus management:** Indicadores visuales claros\n\n## 🏷️ Criterios de Aceptación\n\n- [ ] Botón responde a click correctamente\n- [ ] Estados visuales claros (hover, active, disabled)\n- [ ] Accesible por teclado\n- [ ] Funciona en dispositivos móviles\n- [ ] Cumple estándares WCAG\n- [ ] Tiene feedback visual adecuado\n- [ ] Maneja errores correctamente",
+      "labels": ["bug", "ui", "interaction", "frontend", "accessibility", "ux"],
+      "priority": "medium",
+      "assignee": "frontend-team",
+      "estimated_hours": 6,
+      "complexity": "medium"
+    }
+  },
+  "performance_issues": {
+    "keywords": ["lento", "lentitud", "performance", "rápido", "tiempo", "carga"],
+    "role": "performance_engineer",
+    "external_docs": [
+      "https://web.dev/vitals/",
+      "https://developer.mozilla.org/en-US/docs/Web/Performance"
+    ],
+    "improvements": {
+      "description": "## 📝 Descripción del Problema\n\nEl miembro del equipo reporta problemas de rendimiento que afectan la experiencia de uso. Esto puede incluir tiempos de carga lentos, respuestas tardías, o interfaz poco responsiva.\n\n### 📊 Impacto en el Negocio\n- **Experiencia del miembro:** Frustración y posible abandono\n- **Conversiones:** Impacto directo en tasas de conversión\n- **SEO:** Google penaliza sitios lentos\n- **Costos:** Mayor consumo de recursos del servidor\n\n### 🔍 Contexto Técnico\nSegún [Web Vitals](https://web.dev/vitals/) y guías de [MDN Performance](https://developer.mozilla.org/en-US/docs/Web/Performance), el rendimiento debe medirse con métricas específicas y optimizarse continuamente.\n\n## 🔧 Pasos para Reproducir\n\n1. Acceder a la funcionalidad afectada\n2. Medir el tiempo de respuesta con herramientas de desarrollador\n3. Realizar las acciones típicas del miembro\n4. Observar los retrasos o comportamientos lentos\n5. Analizar Network tab para identificar cuellos de botella\n6. Medir Core Web Vitals (LCP, FID, CLS)\n7. Testear en diferentes dispositivos y conexiones\n\n## ✅ Comportamiento Esperado\n\nLa aplicación debería:\n- **Cargar en menos de 3 segundos** (LCP)\n- **Responder a interacciones** en menos de 100ms (FID)\n- **Mantener estabilidad visual** (CLS < 0.1)\n- **Tener FCP** bajo 1.8 segundos\n- **Lograr TTI** en menos de 3.8 segundos\n\n### 📈 Métricas Clave (Core Web Vitals)\n- **Largest Contentful Paint (LCP):** <2.5s\n- **First Input Delay (FID):** <100ms\n- **Cumulative Layout Shift (CLS):** <0.1\n- **First Contentful Paint (FCP):** <1.8s\n- **Time to Interactive (TTI):** <3.8s\n\n### 🚀 Estrategias de Optimización\n- **Lazy loading:** Para imágenes y componentes\n- **Code splitting:** División de bundles\n- **Caching:** Estrategias efectivas de cache\n- **Compression:** Gzip/Brotli para assets\n- **CDN:** Distribución de contenido global\n- **Image optimization:** WebP, lazy loading, responsive\n\n### 🔧 Herramientas de Monitoreo\n- **Lighthouse:** Auditorías automáticas\n- **WebPageTest:** Análisis detallado\n- **Chrome DevTools:** Performance profiling\n- **New Relic:** Monitor en producción\n\n## 🏷️ Criterios de Aceptación\n\n- [ ] LCP < 2.5 segundos\n- [ ] FID < 100ms\n- [ ] CLS < 0.1\n- [ ] FCP < 1.8 segundos\n- [ ] TTI < 3.8 segundos\n- [ ] Score Lighthouse > 90\n- [ ] Funciona en 3G\n- [ ] Monitoreo continuo implementado",
+      "labels": ["performance", "optimization", "enhancement", "metrics", "monitoring"],
+      "priority": "high",
+      "assignee": "backend-team",
+      "estimated_hours": 16,
+      "complexity": "high"
+    }
+  },
+  "error_messages": {
+    "keywords": ["error", "mensaje", "exception", "fail", "fallo"],
+    "role": "ux_writer",
+    "external_docs": [
+      "https://www.nngroup.com/articles/error-message-guidelines/",
+      "https://material.io/design/communication/error.html"
+    ],
+    "improvements": {
+      "description": "## 📝 Descripción del Problema\n\nEl miembro del equipo encuentra mensajes de error que no son claros, confusos, o no proporcionan información útil para resolver el problema.\n\n### 😕 Impacto en la Experiencia\n- **Frustración:** Confusión y ansiedad del miembro\n- **Productividad:** Pérdida de tiempo intentando resolver problemas\n- **Soporte:** Aumento en tickets de soporte\n- **Abandono:** Posible pérdida de miembros\n\n### 🔍 Contexto Técnico\nSegún las guías de [Nielsen Norman Group](https://www.nngroup.com/articles/error-message-guidelines/) y [Material Design](https://material.io/design/communication/error.html), los mensajes de error deben ser claros, constructivos y orientados a la acción.\n\n## 🔧 Pasos para Reproducir\n\n1. Realizar la acción que causa el error\n2. Observar el mensaje de error mostrado\n3. Evaluar la claridad y utilidad del mensaje\n4. Verificar si hay información de ayuda disponible\n5. Testear con diferentes tipos de errores\n6. Validar consistencia en toda la aplicación\n\n## ✅ Comportamiento Esperado\n\nLos mensajes de error deberían:\n- **Ser claros** y fáciles de entender para no-técnicos\n- **Explicar qué salió mal** en lenguaje simple\n- **Sugerir cómo solucionar** el problema específicamente\n- **Proporcionar enlaces** a ayuda o documentación relevante\n- **Usar tono empático** y constructivo\n- **Ser consistentes** en estilo y formato\n\n### 🎨 Principios de Diseño de Errores\n- **Claridad:** Sin jerga técnica\n- **Acción:** Siempre sugerir qué hacer\n- **Contexto:** Explicar por qué ocurrió\n- **Empatía:** Tono comprensivo y servicial\n- **Consistencia:** Mismo estilo en toda la app\n\n### 📝 Estructura Ideal\n1. **Título claro:** Error de conexión (no Connection failed)\n2. **Explicación simple:** No podemos conectar con el servidor\n3. **Causa probable:** Tu conexión a internet parece inestable\n4. **Solución:** Verifica tu conexión e intenta nuevamente\n5. **Ayuda adicional:** Si el problema persiste, contacta soporte\n\n### 🌐 Consideraciones de Localización\n- **Idioma:** Traducciones profesionales\n- **Cultural:** Adaptación a contextos locales\n- **Formatos:** Fechas, números, monedas locales\n\n## 🏷️ Criterios de Aceptación\n\n- [ ] Mensajes claros y sin jerga técnica\n- [ ] Siempre sugieren acción concreta\n- [ ] Tono empático y constructivo\n- [ ] Consistencia visual y de estilo\n- [ ] Enlaces a ayuda relevantes\n- [ ] Accesibles para screen readers\n- [ ] Localizados correctamente",
+      "labels": ["ux", "content", "accessibility", "localization", "improvement"],
+      "priority": "medium",
+      "assignee": "frontend-team",
+      "estimated_hours": 8,
+      "complexity": "low"
+    }
+  },
+  "data_export": {
+    "keywords": ["exportar", "export", "descargar", "download", "csv", "pdf"],
+    "role": "backend_engineer",
+    "external_docs": [
+      "https://csv.spec.whatwg.org/",
+      "https://www.w3.org/TR/WCAG21-requirements/"
+    ],
+    "improvements": {
+      "description": "## 📝 Descripción del Problema\n\nEl miembro del equipo no puede exportar datos o la funcionalidad de exportación no funciona correctamente. Esto afecta la capacidad de los miembros para obtener y analizar información fuera de la plataforma.\n\n### 📊 Impacto en el Negocio\n- **Análisis de datos:** Barrera para insights externos\n- **Reportes:** Dificultad para generar informes\n- **Integraciones:** Problemas con otros sistemas\n- **Productividad:** Pérdida de tiempo manual\n\n### 🔍 Contexto Técnico\nBasado en estándares [CSV Specification](https://csv.spec.whatwg.org/) y [WCAG 2.1](https://www.w3.org/TR/WCAG21-requirements/), la exportación debe generar archivos válidos y accesibles.\n\n## 🔧 Pasos para Reproducir\n\n1. Navegar a la sección de exportación\n2. Seleccionar el formato de exportación deseado\n3. Configurar los parámetros de exportación\n4. Intentar iniciar la exportación\n5. Observar el error o comportamiento incorrecto\n6. Verificar el archivo generado (si existe)\n7. Testear con diferentes conjuntos de datos\n\n## ✅ Comportamiento Esperado\n\nLa exportación debería:\n- **Ofrecer múltiples formatos** (CSV, PDF, Excel, JSON)\n- **Permitir personalizar** los datos a exportar\n- **Mostrar progreso** durante exportaciones largas\n- **Notificar cuando** la exportación esté completa\n- **Proporcionar descarga** directa del archivo\n- **Validar integridad** de los datos exportados\n\n### 📁 Formatos Soportados\n- **CSV:** Delimitado por comas, UTF-8, con BOM\n- **Excel:** .xlsx con fórmulas y formatos\n- **PDF:** Reportes formateados con gráficos\n- **JSON:** Estructurado y anidado\n- **XML:** Para integraciones de sistemas\n\n### ⚙️ Configuración de Exportación\n- **Selección de campos:** Checkbox para cada columna\n- **Filtros:** Por fecha, categoría, estado\n- **Ordenamiento:** Múltiples niveles\n- **Paginación:** Para datasets grandes\n- **Formato de fechas:** Configurable por usuario\n\n### 🚀 Consideraciones de Rendimiento\n- **Streaming:** Para archivos grandes\n- **Async processing:** Cola de tareas\n- **Cache:** Resultados temporales\n- **Compression:** Reducción de tamaño\n- **Chunking:** Procesamiento por lotes\n\n### 🔒 Seguridad y Privacidad\n- **Sanitización:** Remover datos sensibles\n- **Auditoría:** Log de todas las exportaciones\n- **Permisos:** Por rol y tipo de dato\n- **Retención:** Política de borrado automático\n\n## 🏷️ Criterios de Aceptación\n\n- [ ] Exportación funciona en todos los formatos\n- [ ] Archivos válidos y sin corrupción\n- [ ] Configuración personalizable\n- [ ] Indicadores de progreso claros\n- [ ] Notificaciones automáticas\n- [ ] Manejo de datasets grandes\n- [ ] Seguridad implementada\n- [ ] Accesibilidad para screen readers",
+      "labels": ["feature", "export", "data", "backend", "performance"],
+      "priority": "medium",
+      "assignee": "backend-team",
+      "estimated_hours": 20,
+      "complexity": "high"
+    }
+  }
+}

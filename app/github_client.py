@@ -15,7 +15,8 @@ class GitHubClient:
     def __init__(self, token: str):
         """Initialize GitHub client with token."""
         self.github = Github(token)
-        self.token = token
+        # Store only token hash for logging (security)
+        self._token_hash = hash(token) if token else None
 
     def get_issue(self, repo_name: str, issue_number: int) -> Issue | None:
         """Get issue by repository and number."""
