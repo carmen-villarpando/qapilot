@@ -436,9 +436,17 @@ Based on the provided title, this issue appears related to critical functionalit
         logger.info(f"Generated description length: {len(description)}")
         logger.info(f"Description starts with: {description[:100]}...")
         
+        # Determine appropriate labels based on issue type
+        if command_type == "bug" or (command_type == "auto" and self._is_bug_issue(title)):
+            base_labels = ["bug", "needs-investigation"]
+        elif command_type == "story" or (command_type == "auto" and self._is_story_issue(title)):
+            base_labels = ["feature", "user-story"]
+        else:
+            base_labels = ["enhancement"]
+        
         # Get app-specific labels
         app_labels = self.terminology_manager.suggest_labels(title, detected_app)
-        logger.info(f"Generated labels: {list(set(['bug', 'needs-investigation', detected_role] + app_labels))}")
+        logger.info(f"Generated labels: {list(set(base_labels + [detected_role] + app_labels))}")
         
         # Generate improved title based on command type
         if command_type == "bug":
@@ -459,7 +467,7 @@ Based on the provided title, this issue appears related to critical functionalit
         return {
             "description": description,
             "improved_title": improved_title,
-            "labels": list(set(["bug", "needs-investigation", detected_role] + app_labels)),
+            "labels": list(set(base_labels + [detected_role] + app_labels)),
             "priority": "medium",
             "assignee": "team-lead",
             "detected_role": detected_role,
@@ -1458,45 +1466,25 @@ Based on the provided title, this issue appears related to critical functionalit
         # Generate dependencies and risks
         dependencies_risks = self._generate_dependencies_risks(title, detected_app, detected_role)
         
-        return f"""### 🎯 User Story
+        return f"""🎯 User Story
 
 {user_story}
 
-### 💼 Business Context
+💼 Business Context
 
 {business_context}
 
 {app_enhanced_description}
 
-### ✅ Acceptance Criteria
+✅ Acceptance Criteria
 
 {acceptance_criteria}
 
-### 🔧 Technical Requirements
-
-{technical_requirements}
-
-### 📊 Success Metrics
-
-{success_metrics}
-
-### ⚠️ Dependencies & Risks
+⚠️ Dependencies & Risks
 
 {dependencies_risks}
 
-### 🏷️ Suggested Labels
-
-feature, user-story, {detected_app.lower()}, product-backlog, ready-for-development
-
-### 📈 Product Assessment
-
-**Business Value:** {self._assess_business_value(title)}
-**Development Effort:** {self._assess_development_effort(title)}
-**Priority:** {self._assess_story_priority(title)}
-
----
-
-*This requirement has been blessed by QAPilot's Story Wizard Extraordinaire!*"""
+This requirement has been blessed by QAPilot's Story Wizard Extraordinaire!"""
 
     def _generate_story_title(self, title: str) -> str:
         """Generate improved title for user stories with typo correction, preserving original intent."""
@@ -1858,96 +1846,47 @@ feature, user-story, {detected_app.lower()}, product-backlog, ready-for-developm
 - 90% cross-platform compatibility"""
 
     def _generate_dependencies_risks(self, title: str, detected_app: str, detected_role: str) -> str:
-        """Generate dependencies and risks assessment."""
+        """Generate concise dependencies and risks assessment."""
         title_lower = title.lower()
         
-        if "kanban" in title_lower and "taiga" in title_lower:
+        if "scroll" in title_lower or "scrolling" in title_lower:
             return """**Dependencies:**
-- Existing Taiga project management system
-- User authentication and authorization service
-- Database schema for kanban data storage
-- Real-time communication infrastructure
-- Frontend framework compatibility
+- Frontend framework and browser APIs
+- Performance monitoring tools
 
 **Risks:**
-- Performance degradation with large datasets
-- Browser compatibility issues with drag-and-drop
-- Real-time synchronization conflicts
-- User resistance to new workflow changes
-- Integration complexity with existing features
+- Browser compatibility issues
+- Performance impact on existing functionality
 
-**Mitigation Strategies:**
-- Implement pagination and virtualization for large datasets
-- Comprehensive cross-browser testing
-- Conflict resolution mechanisms for concurrent updates
-- User training and change management
-- Phased rollout with rollback capability"""
+**Mitigation:**
+- Cross-browser testing and performance optimization"""
+        
+        elif "kanban" in title_lower and "taiga" in title_lower:
+            return """**Dependencies:**
+- Existing Taiga project management system
+- Database schema for kanban data
+
+**Risks:**
+- Performance with large datasets
+- User adoption challenges
+
+**Mitigation:**
+- Phased rollout with user training"""
         
         elif "login" in title_lower or "authentication" in title_lower:
             return """**Dependencies:**
-- User database and authentication service
+- User authentication service
 - Email service for password reset
-- Two-factor authentication provider
-- SSL/TLS certificate management
-- Session storage infrastructure
 
 **Risks:**
-- Security vulnerabilities in authentication flow
-- User data exposure or breach
-- Service availability and single points of failure
-- Compliance with data protection regulations
-- User resistance to security measures
+- Security vulnerabilities
+- Service availability issues
 
-**Mitigation Strategies:**
-- Regular security audits and penetration testing
-- Implementation of defense-in-depth security measures
-- Redundant infrastructure and disaster recovery
-- Privacy by design and compliance frameworks
-- User education and security awareness programs"""
-        
-        elif "scroll" in title_lower or "scrolling" in title_lower:
-            return """**Dependencies:**
-- Frontend framework and browser APIs
-- Content management and delivery system
-- Device and browser compatibility layers
-- Performance monitoring tools
-- Accessibility testing frameworks
-
-**Risks:**
-- Performance degradation on low-end devices
-- Browser compatibility issues
-- Accessibility compliance gaps
-- User experience inconsistencies
-- Impact on existing functionality
-
-**Mitigation Strategies:**
-- Progressive enhancement and graceful degradation
-- Comprehensive cross-browser testing program
-- Accessibility testing and compliance verification
-- Performance monitoring and optimization
-- Careful integration testing with existing features"""
+**Mitigation:**
+- Security audits and redundant infrastructure"""
         
         else:
-            return f"""**Dependencies:**
-- Existing {detected_app} infrastructure
-- Third-party APIs and services
-- Database systems and data storage
-- Authentication and authorization services
-- Monitoring and logging infrastructure
-
-**Risks:**
-- Integration complexity with existing systems
-- Performance impact on current functionality
-- User adoption and change management
-- Technical debt and maintenance burden
-- Resource allocation and timeline constraints
-
-**Mitigation Strategies:**
-- Phased implementation with thorough testing
-- Performance monitoring and optimization
-- User training and documentation
-- Regular code reviews and quality assurance
-- Contingency planning and risk monitoring"""
+            return "N/A - No specific dependencies or risks identified"
 
     def _assess_business_value(self, title: str) -> str:
         """Assess business value of the feature."""
