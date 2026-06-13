@@ -803,7 +803,7 @@ Based on the provided title, this issue appears related to critical functionalit
 
 ---
 
-*This issue has been analyzed by QAPilot's QA Hero perspective.*"""
+*This issue has been analyzed by QAPilot's Bug Squasher Supreme!*"""
 
     def _generate_improved_title(self, title: str) -> str:
         """Generate an improved title with typo correction, preserving original intent."""
@@ -1496,7 +1496,7 @@ feature, user-story, {detected_app.lower()}, product-backlog, ready-for-developm
 
 ---
 
-*This requirement has been analyzed by QAPilot's Product Owner perspective.*"""
+*This requirement has been blessed by QAPilot's Story Wizard Extraordinaire!*"""
 
     def _generate_story_title(self, title: str) -> str:
         """Generate improved title for user stories with typo correction, preserving original intent."""
