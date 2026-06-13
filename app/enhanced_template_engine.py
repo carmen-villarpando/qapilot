@@ -864,10 +864,27 @@ Based on the provided title, this issue appears related to critical functionalit
             r'\bnaviagtion\b': 'navigation',
         }
         
-        # Apply technical fixes first
+        # Fix common keyboard proximity typos (like LLMs do)
+        keyboard_fixes = {
+            r'\bdd\b': 'add',  # D is next to A on QWERTY
+            r'\badd\b': 'add',  # Double D from D key
+            r'\bsdd\b': 'add',  # S and D near A
+            r'\bqdd\b': 'add',  # Q and D near A
+            r'\baee\b': 'add',  # E is next to W, but A-E common
+            r'\bass\b': 'add',  # S and A near D
+            r'\bqww\b': 'add',  # Q and W near A and D
+            r'\bzd\b': 'add',   # Z and D near A
+        }
+        
+        # Apply keyboard proximity fixes first (most context-aware)
+        for pattern, replacement in keyboard_fixes.items():
+            corrected = re.sub(pattern, replacement, corrected, flags=re.IGNORECASE)
+        
+        # Apply technical fixes second
         for pattern, replacement in technical_fixes.items():
             corrected = re.sub(pattern, replacement, corrected, flags=re.IGNORECASE)
         
+        # Apply contraction fixes third
         for pattern, replacement in contraction_fixes.items():
             corrected = re.sub(pattern, replacement, corrected, flags=re.IGNORECASE)
         
