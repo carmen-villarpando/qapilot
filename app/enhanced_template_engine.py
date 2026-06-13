@@ -440,7 +440,7 @@ Based on the provided title, this issue appears related to critical functionalit
         if command_type == "bug" or (command_type == "auto" and self._is_bug_issue(title)):
             base_labels = ["bug", "needs-investigation"]
         elif command_type == "story" or (command_type == "auto" and self._is_story_issue(title)):
-            base_labels = ["feature", "user-story"]
+            base_labels = ["feature", "story"]
         else:
             base_labels = ["enhancement"]
         
@@ -825,150 +825,62 @@ Based on the provided title, this issue appears related to critical functionalit
         """Correct common typos and improve title formatting."""
         import re
         
-        # Common typo corrections
+        # Common typo corrections - more conservative approach
         typo_corrections = {
-            # Articles and common words
-            'th': 'the',
+            # Common typos
             'teh': 'the',
-            'tha': 'the',
-            'he': 'the',
-            'a': 'a',
-            'an': 'an',
-            
-            # Project/app name typos
-            'taiga projet': 'Taiga project',
-            'taiga proyect': 'Taiga project',
-            'taiga projetc': 'Taiga project',
-            'taiga projet': 'Taiga project',
-            'taiga proj': 'Taiga project',
-            'taiga': 'Taiga',
-            
-            # Common word typos
-            'kanban bord': 'Kanban board',
-            'kanban bord': 'Kanban board',
-            'kanban bord': 'Kanban board',
-            'kanban bard': 'Kanban board',
-            'kanban': 'Kanban',
-            
+            'scroling': 'scrolling',
+            'scrooling': 'scrolling',
             'loding': 'loading',
             'loadin': 'loading',
             'laoding': 'loading',
-            'loaing': 'loading',
-            
-            'faild': 'failed',
-            'faild': 'failed',
-            'faile': 'failed',
-            'fail': 'failed',
-            
-            'brocken': 'broken',
-            'brocken': 'broken',
-            'broke': 'broken',
-            
-            'not woking': 'not working',
-            'not wroking': 'not working',
-            'not workin': 'not working',
-            'not wokring': 'not working',
-            
+            'woking': 'working',
+            'wroking': 'working',
+            'workin': 'working',
+            'wokring': 'working',
             'perfomance': 'performance',
             'perfromance': 'performance',
             'preformance': 'performance',
             'performace': 'performance',
-            
             'authentiction': 'authentication',
             'authenticaion': 'authentication',
             'authentacation': 'authentication',
-            
-            'scroling': 'scrolling',
-            'scroling': 'scrolling',
-            'scroling': 'scrolling',
-            'scrooling': 'scrolling',
-            
             'buton': 'button',
-            'buton': 'button',
-            'buton': 'button',
-            
             'responce': 'response',
             'respose': 'response',
-            'responce': 'response',
-            
             'erorr': 'error',
             'eror': 'error',
-            'erorr': 'error',
-            
             'issu': 'issue',
             'isue': 'issue',
-            'issu': 'issue',
-            
-            'problm': 'problem',
             'problm': 'problem',
             'proble': 'problem',
-            'problm': 'problem',
-            
             'functonality': 'functionality',
             'functinality': 'functionality',
-            'functonality': 'functionality',
             'funcionality': 'functionality',
-            
             'acces': 'access',
             'acess': 'access',
-            'acces': 'access',
-            
-            'user': 'user',
-            'usr': 'user',
-            'useer': 'user',
-            
-            'systm': 'system',
             'systm': 'system',
             'systme': 'system',
-            'systm': 'system',
-            
             'interfac': 'interface',
             'interfce': 'interface',
-            'interfac': 'interface',
-            
             'naviagation': 'navigation',
             'naviagtion': 'navigation',
-            'naviagation': 'navigation',
-            
-            'behavoir': 'behavior',
             'behavoir': 'behavior',
             'behavour': 'behavior',
-            
             'expcted': 'expected',
             'expeted': 'expected',
-            'expcted': 'expected',
-            
             'reproduc': 'reproduce',
-            'reproduc': 'reproduce',
-            'reproduc': 'reproduce',
-            
-            'environmnt': 'environment',
             'environmnt': 'environment',
             'environmet': 'environment',
-            
-            'prority': 'priority',
             'prority': 'priority',
             'priorty': 'priority',
-            
-            'impact': 'impact',
             'impct': 'impact',
             'imact': 'impact',
-            
-            'step': 'step',
-            'stp': 'step',
-            'ste': 'step',
-            
-            'descripion': 'description',
             'descripion': 'description',
             'descripton': 'description',
-            
-            'actual': 'actual',
             'actul': 'actual',
             'actal': 'actual',
-            
             'behvior': 'behavior',
-            'behvior': 'behavior',
-            'behavour': 'behavior',
         }
         
         # Apply typo corrections
@@ -1473,8 +1385,6 @@ Based on the provided title, this issue appears related to critical functionalit
 💼 Business Context
 
 {business_context}
-
-{app_enhanced_description}
 
 ✅ Acceptance Criteria
 
