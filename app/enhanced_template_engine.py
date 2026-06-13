@@ -341,6 +341,11 @@ Based on the provided title, this issue appears related to critical functionalit
 
     def _generate_generic_improvement(self, title: str, repo_context: str = "", detected_app: str = "github") -> Dict[str, Any]:
         """Generate generic improvements when no template matches."""
+        import logging
+        logger = logging.getLogger(__name__)
+        
+        logger.info(f"Generating improvement for title: '{title}'")
+        
         detected_role = self._detect_role_from_title(title)
         role_context = self.roles[detected_role]
         
@@ -355,10 +360,16 @@ Based on the provided title, this issue appears related to critical functionalit
             contextual_description, detected_app, mentioned_features
         )
         
+        logger.info(f"Detected app: '{detected_app}', role: '{detected_role}'")
+        logger.info(f"Bug detection result: {self._is_bug_issue(title)}")
+        logger.info(f"Story detection result: {self._is_story_issue(title)}")
+        
         # Generate professional QA-style description for bugs
         if self._is_bug_issue(title):
+            logger.info("Using QA Lead format for bug")
             description = self._generate_qa_lead_description(title, detected_app, detected_role, mentioned_features, app_enhanced_description)
         elif self._is_story_issue(title):
+            logger.info("Using PO/PM format for story")
             description = self._generate_po_pm_description(title, detected_app, detected_role, mentioned_features, app_enhanced_description)
         else:
             description = f"""## 📝 Description
@@ -384,8 +395,12 @@ Based on the provided title, this issue appears related to critical functionalit
 {self._generate_contextual_acceptance_criteria(title, detected_app, detected_role)}
 """
         
+        logger.info(f"Generated description length: {len(description)}")
+        logger.info(f"Description starts with: {description[:100]}...")
+        
         # Get app-specific labels
         app_labels = self.terminology_manager.suggest_labels(title, detected_app)
+        logger.info(f"Generated labels: {list(set(['bug', 'needs-investigation', detected_role] + app_labels))}")
         
         return {
             "description": description,

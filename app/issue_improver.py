@@ -96,13 +96,22 @@ class IssueImprover:
 
         # Get repository context
         repo_context = await self._get_repo_context(repo_name)
+        logger.info(f"Repository context: {repo_context[:200]}...")
 
         # Generate improvements using templates with app terminology
         improvements = self.template_engine.improve_issue(title, repo_context, repo_name)
+        logger.info(f"Generated improvements keys: {list(improvements.keys()) if improvements else 'None'}")
+        
         if not improvements:
             logger.error("Failed to generate improvements")
             await self._add_error_comment(repo_name, issue_number)
             return False
+        
+        # Log the description that was generated
+        if improvements.get("description"):
+            logger.info(f"Generated description (first 500 chars): {improvements['description'][:500]}...")
+        else:
+            logger.warning("No description in improvements")
 
         # Apply improvements
         success = await self._apply_improvements(repo_name, issue_number, improvements)
@@ -178,24 +187,34 @@ class IssueImprover:
 
     def _build_improved_body(self, current_body: str, improvements: dict[str, Any]) -> str:
         """Build improved issue body."""
+        logger.info(f"Building improved body from current_body: {current_body[:100]}...")
+        logger.info(f"Available improvements: {list(improvements.keys()) if improvements else 'None'}")
+        
         # Clean /improve-issue command from current body
         cleaned_body = re.sub(r'/improve-issue', '', current_body, flags=re.IGNORECASE).strip()
+        logger.info(f"Cleaned body: {cleaned_body[:100]}...")
         
         # Use the complete improved description from EnhancedTemplateEngine
         if improvements.get("description"):
             improved_description = improvements['description']
+            logger.info(f"Using improved description (first 300 chars): {improved_description[:300]}...")
             
             # Add QAPilot signature if not already present
             if "QAPilot improved this issue" not in improved_description:
                 improved_description += "\n\n---\n\n*QAPilot improved this issue*"
+                logger.info("Added QAPilot signature")
             
             # Combine with cleaned original body if there's meaningful content
             if cleaned_body and len(cleaned_body.strip()) > 10:
-                return f"{cleaned_body}\n\n---\n\n{improved_description}"
+                final_body = f"{cleaned_body}\n\n---\n\n{improved_description}"
+                logger.info(f"Combined body length: {len(final_body)}")
+                return final_body
             else:
+                logger.info(f"Using only improved description, length: {len(improved_description)}")
                 return improved_description
         else:
             # Fallback to original behavior if no description
+            logger.warning("No description found in improvements, using cleaned body")
             return cleaned_body
 
     async def _add_success_comment(
