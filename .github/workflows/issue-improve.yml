@@ -30,15 +30,15 @@ jobs:
           
       - name: Install dependencies
         run: |
-          uv sync --dev
+          uv sync
           
       - name: Improve issue
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GITHUB_MODELS_TOKEN: ${{ secrets.GITHUB_MODELS_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.QAPILOT_GITHUB_TOKEN }}
+          GITHUB_MODELS_TOKEN: ${{ secrets.QAPILOT_MODELS_TOKEN }}
           REPO_NAME: ${{ github.repository }}
           ISSUE_NUMBER: ${{ github.event.issue.number }}
           COMMENT_BODY: ${{ github.event.comment.body }}
           COMMENT_AUTHOR: ${{ github.event.comment.user.login }}
         run: |
-          python -m app.main_improve_issue
+          uv run python -m app.main_improve_issue
