@@ -1,4 +1,4 @@
-name: DISABLED - Improve Issue on Creation with QAPilot
+name: Improve Issue on Creation with QAPilot
 
 on:
   issues:
@@ -38,7 +38,6 @@ jobs:
       - name: Improve issue
         env:
           GITHUB_TOKEN: ${{ secrets.QAPILOT_GITHUB_TOKEN }}
-          GITHUB_MODELS_TOKEN: ${{ secrets.QAPILOT_MODELS_TOKEN }}
           REPO_NAME: ${{ github.repository }}
           ISSUE_NUMBER: ${{ github.event.issue.number }}
           ISSUE_BODY: ${{ github.event.issue.body }}
