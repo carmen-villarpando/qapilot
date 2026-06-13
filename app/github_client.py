@@ -41,19 +41,18 @@ class GitHubClient:
             if not issue:
                 return False
 
-            # Combine title and body updates in a single call
-            edit_kwargs = {}
+            # Try separate calls for title and body to ensure title updates correctly
             if title:
-                edit_kwargs['title'] = title
                 logger.info(f"Will update title to: {title}")
+                logger.info(f"Calling issue.edit with title only")
+                issue.edit(title=title)
+                logger.info(f"Successfully updated title")
+                
             if body:
-                edit_kwargs['body'] = body
                 logger.info(f"Will update body (length: {len(body)})")
-            
-            if edit_kwargs:
-                logger.info(f"Calling issue.edit with: {list(edit_kwargs.keys())}")
-                issue.edit(**edit_kwargs)
-                logger.info(f"Successfully updated title/body")
+                logger.info(f"Calling issue.edit with body only")
+                issue.edit(body=body)
+                logger.info(f"Successfully updated body")
                 
             if labels:
                 # Get current labels and remove them
