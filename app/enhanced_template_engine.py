@@ -732,26 +732,17 @@ Based on the provided title, this issue appears related to critical functionalit
 *This issue has been analyzed by QAPilot's QA Lead perspective.*"""
 
     def _generate_improved_title(self, title: str) -> str:
-        """Generate an improved, more descriptive title with typo correction."""
-        # First correct typos and improve the title
+        """Generate an improved title with typo correction, preserving original intent."""
+        # First correct typos and improve formatting only
         corrected_title = self._correct_title_typos(title)
         title_lower = corrected_title.lower()
         
-        if "kanban" in title_lower and "not loading" in title_lower:
-            return "Bug: Kanban board fails to load in Taiga project"
-        elif "login" in title_lower and ("fail" in title_lower or "not working" in title_lower):
-            return "Bug: Authentication failure prevents user login"
-        elif "scroll" in title_lower and ("not working" in title_lower or "broken" in title_lower):
-            return "Bug: Scrolling functionality is not working in interface"
-        elif "button" in title_lower and ("not working" in title_lower or "click" in title_lower):
-            return "Bug: Interactive buttons are not responding to user clicks"
-        elif "performance" in title_lower or "slow" in title_lower:
-            return "Bug: Performance degradation affecting system responsiveness"
+        # Only add "Bug:" prefix if it's clearly a bug and doesn't already have it
+        if self._is_bug_issue(title) and not title_lower.startswith("bug:"):
+            return f"Bug: {corrected_title}"
         else:
-            # Generic bug title improvement with typo correction
-            if "bug" not in title_lower:
-                return f"Bug: {corrected_title}"
-            return corrected_title.title()
+            # Just return the corrected title with proper formatting
+            return corrected_title
 
     def _correct_title_typos(self, title: str) -> str:
         """Correct common typos and improve title formatting."""
@@ -1433,26 +1424,17 @@ feature, user-story, {detected_app.lower()}, product-backlog, ready-for-developm
 *This requirement has been analyzed by QAPilot's Product Owner perspective. All assumptions should be validated with stakeholders before development begins.*"""
 
     def _generate_story_title(self, title: str) -> str:
-        """Generate improved title for user stories with typo correction."""
-        # First correct typos and improve the title
+        """Generate improved title for user stories with typo correction, preserving original intent."""
+        # First correct typos and improve formatting only
         corrected_title = self._correct_title_typos(title)
         title_lower = corrected_title.lower()
         
-        if "kanban" in title_lower and ("add" in title_lower or "create" in title_lower or "implement" in title_lower):
-            return "Feature: Add kanban board functionality to Taiga project"
-        elif "login" in title_lower and ("improve" in title_lower or "enhance" in title_lower or "add" in title_lower):
-            return "Feature: Enhanced login experience with improved authentication"
-        elif "scroll" in title_lower and ("improve" in title_lower or "enhance" in title_lower):
-            return "Feature: Enhanced scrolling experience for better user navigation"
-        elif "button" in title_lower and ("add" in title_lower or "create" in title_lower or "implement" in title_lower):
-            return "Feature: Add interactive button with enhanced user feedback"
-        elif "performance" in title_lower and ("improve" in title_lower or "optimize" in title_lower):
-            return "Feature: Performance optimization for enhanced user experience"
+        # Only add "Feature:" prefix if it's clearly a feature and doesn't already have it
+        if self._is_story_issue(title) and not title_lower.startswith("feature:"):
+            return f"Feature: {corrected_title}"
         else:
-            # Generic feature title improvement with typo correction
-            if "feature" not in title_lower and "story" not in title_lower:
-                return f"Feature: {corrected_title}"
-            return corrected_title.title()
+            # Just return the corrected title with proper formatting
+            return corrected_title
 
     def _generate_user_story(self, title: str, detected_app: str, detected_role: str) -> str:
         """Generate user story in standard format."""
