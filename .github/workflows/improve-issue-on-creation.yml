@@ -1,8 +1,8 @@
-name: Improve Issue with QAPilot
+name: Improve Issue on Creation with QAPilot
 
 on:
-  issue_comment:
-    types: [created]
+  issues:
+    types: [opened]
 
 permissions:
   contents: write
@@ -13,9 +13,9 @@ env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
 jobs:
-  improve-issue:
+  improve-issue-on-creation:
     runs-on: ubuntu-latest
-    if: contains(github.event.comment.body, '/improve-issue')
+    if: contains(github.event.issue.body, '/improve-issue')
     
     steps:
       - name: Checkout repository
@@ -35,13 +35,13 @@ jobs:
         run: |
           uv sync
           
-      - name: Improve issue
+      - name: Improve issue on creation
         env:
           GITHUB_TOKEN: ${{ secrets.QAPILOT_GITHUB_TOKEN }}
           GITHUB_MODELS_TOKEN: ${{ secrets.QAPILOT_MODELS_TOKEN }}
           REPO_NAME: ${{ github.repository }}
           ISSUE_NUMBER: ${{ github.event.issue.number }}
-          COMMENT_BODY: ${{ github.event.comment.body }}
-          COMMENT_AUTHOR: ${{ github.event.comment.user.login }}
+          ISSUE_BODY: ${{ github.event.issue.body }}
+          ISSUE_AUTHOR: ${{ github.event.issue.user.login }}
         run: |
-          cd app && uv run python -m main_improve_issue
+          cd app && uv run python -m main_improve_issue_creation
