@@ -181,38 +181,22 @@ class IssueImprover:
         # Clean /improve-issue command from current body
         cleaned_body = re.sub(r'/improve-issue', '', current_body, flags=re.IGNORECASE).strip()
         
-        new_body = cleaned_body
-
-        # Add structured sections if they don't exist
-        sections = []
-
+        # Use the complete improved description from EnhancedTemplateEngine
         if improvements.get("description"):
-            sections.append(improvements['description'])
-
-        if improvements.get("reproduction_steps"):
-            sections.append(f"## 🔧 Reproduction Steps\n{improvements['reproduction_steps']}")
-
-        if improvements.get("expected_behavior"):
-            sections.append(f"## ✅ Expected Behavior\n{improvements['expected_behavior']}")
-
-        # Add metadata
-        metadata = []
-        if improvements.get("priority"):
-            metadata.append(f"**Priority:** {improvements['priority']}")
-        if improvements.get("assignee_suggestion"):
-            metadata.append(f"**Suggested Assignee:** {improvements['assignee_suggestion']}")
-
-        if metadata:
-            sections.append("## 📊 Metadata\n" + "\n".join(metadata))
-
-        # Combine with existing content
-        if sections:
-            if new_body:
-                new_body += "\n\n---\n\n" + "\n\n".join(sections)
+            improved_description = improvements['description']
+            
+            # Add QAPilot signature if not already present
+            if "QAPilot improved this issue" not in improved_description:
+                improved_description += "\n\n---\n\n*QAPilot improved this issue*"
+            
+            # Combine with cleaned original body if there's meaningful content
+            if cleaned_body and len(cleaned_body.strip()) > 10:
+                return f"{cleaned_body}\n\n---\n\n{improved_description}"
             else:
-                new_body = "\n\n".join(sections)
-
-        return new_body
+                return improved_description
+        else:
+            # Fallback to original behavior if no description
+            return cleaned_body
 
     async def _add_success_comment(
         self,
