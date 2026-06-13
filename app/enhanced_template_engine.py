@@ -822,99 +822,192 @@ Based on the provided title, this issue appears related to critical functionalit
         return corrected_title
 
     def _correct_title_typos(self, title: str) -> str:
-        """Correct common typos and improve title formatting."""
+        """Intelligent typo correction using pattern recognition and similarity algorithms."""
         import re
         
-        # Apply specific typo corrections first (more aggressive)
         corrected = title
         
-        # Fix common short typos that don't work well with word boundaries
+        # First fix obvious short typos that are hard to detect with algorithms
         corrected = re.sub(r'\bTh\b', 'The', corrected, flags=re.IGNORECASE)
-        corrected = re.sub(r'\bTh\b', 'The', corrected)  # Ensure it works
         
-        # Common typo corrections - more conservative approach
-        typo_corrections = {
-            # Common typos
-            'teh': 'the',
-            'scroling': 'scrolling',
-            'scrooling': 'scrolling',
-            'loding': 'loading',
-            'loadin': 'loading',
-            'laoding': 'loading',
-            'woking': 'working',
-            'wroking': 'working',
-            'workin': 'working',
-            'wokring': 'working',
-            'perfomance': 'performance',
-            'perfromance': 'performance',
-            'preformance': 'performance',
-            'performace': 'performance',
-            'authentiction': 'authentication',
-            'authenticaion': 'authentication',
-            'authentacation': 'authentication',
-            'buton': 'button',
-            'responce': 'response',
-            'respose': 'response',
-            'erorr': 'error',
-            'eror': 'error',
-            'issu': 'issue',
-            'isue': 'issue',
-            'problm': 'problem',
-            'proble': 'problem',
-            'functonality': 'functionality',
-            'functinality': 'functionality',
-            'funcionality': 'functionality',
-            'acces': 'access',
-            'acess': 'access',
-            'systm': 'system',
-            'systme': 'system',
-            'interfac': 'interface',
-            'interfce': 'interface',
-            'naviagation': 'navigation',
-            'naviagtion': 'navigation',
-            'behavoir': 'behavior',
-            'behavour': 'behavior',
-            'expcted': 'expected',
-            'expeted': 'expected',
-            'reproduc': 'reproduce',
-            'environmnt': 'environment',
-            'environmet': 'environment',
-            'prority': 'priority',
-            'priorty': 'priority',
-            'impct': 'impact',
-            'imact': 'impact',
-            'descripion': 'description',
-            'descripton': 'description',
-            'actul': 'actual',
-            'actal': 'actual',
-            'behvior': 'behavior',
-            'dont': "doesn't",
-            'wont': "won't",
-            'cant': "can't",
-            'didnt': "didn't",
-            'doesnt': "doesn't",
-            'isnt': "isn't",
-            'arent': "aren't",
-            'wasnt': "wasn't",
-            'werent': "weren't",
-            'havent': "haven't",
-            'hasnt': "hasn't",
-            'wont': "won't",
-            'couldnt': "couldn't",
-            'shouldnt': "shouldn't",
-            'wouldnt': "wouldn't",
-            'mightnt': "mightn't",
-            'mustnt': "mustn't",
+        # Fix common contraction typos that similarity struggles with
+        contraction_fixes = {
+            r'\bdont\b': "doesn't",
+            r'\bwont\b': "won't",
+            r'\bdoesnt\b': "doesn't",
+            r'\bcant\b': "can't",
+            r'\bdidnt\b': "didn't",
+            r'\bisnt\b': "isn't",
+            r'\barent\b': "aren't",
+            r'\bwasnt\b': "wasn't",
+            r'\bwerent\b': "weren't",
+            r'\bhavent\b': "haven't",
+            r'\bhasnt\b': "hasn't",
+            r'\bcouldnt\b': "couldn't",
+            r'\bshouldnt\b': "shouldn't",
+            r'\bwouldnt\b': "wouldn't",
         }
         
-        # Apply typo corrections
-        for typo, correction in typo_corrections.items():
-            corrected = re.sub(rf'\b{re.escape(typo)}\b', correction, corrected, flags=re.IGNORECASE)
+        for pattern, replacement in contraction_fixes.items():
+            corrected = re.sub(pattern, replacement, corrected, flags=re.IGNORECASE)
+        
+        # Use intelligent typo correction for remaining words
+        words = corrected.split()
+        corrected_words = []
+        
+        for word in words:
+            corrected_word = self._intelligent_word_correction(word)
+            corrected_words.append(corrected_word)
+        
+        corrected = ' '.join(corrected_words)
         
         # Fix spacing and capitalization
         corrected = self._fix_title_formatting(corrected)
         
         return corrected
+
+    def _intelligent_word_correction(self, word: str) -> str:
+        """Intelligently correct a word using similarity and pattern analysis."""
+        # Common English words for reference (ONLY correct words)
+        common_words = {
+            'the', 'and', 'for', 'are', 'but', 'not', 'you', 'all', 'can', 'had', 'her', 'was', 'one',
+            'our', 'out', 'day', 'get', 'has', 'him', 'his', 'how', 'man', 'new', 'now', 'old', 'see',
+            'two', 'way', 'who', 'boy', 'did', 'its', 'let', 'put', 'say', 'she', 'too', 'use', 'was',
+            'will', 'with', 'have', 'this', 'that', 'from', 'they', 'know', 'want', 'been', 'good',
+            'much', 'some', 'time', 'very', 'when', 'come', 'here', 'just', 'like', 'long', 'make',
+            'many', 'over', 'such', 'take', 'than', 'them', 'well', 'were', 'what', 'work',
+            'scrolling', 'loading', 'working', 'button', 'functionality', 'performance', 'authentication',
+            'response', 'error', 'issue', 'problem', 'system', 'interface', 'navigation', 'behavior',
+            'expected', 'reproduce', 'environment', 'priority', 'impact', 'description', 'actual',
+            'access', 'user', 'feature', 'page', 'form', 'data', 'test', 'view', 'login', 'click',
+            'submit', 'update', 'delete', 'create', 'edit', 'save', 'cancel', 'close', 'open', 'show',
+            'hide', 'enable', 'disable', 'active', 'inactive', 'valid', 'invalid', 'success', 'failure',
+            # Additional technical terms (correct versions only)
+            'system', 'scrolling', 'button', 'access', 'authentication', 'performance', 'loading',
+            'working', 'response', 'interface', 'behavior', 'expected', 'problem', 'functionality',
+            'environment', 'priority'
+        }
+        
+        # Technical terms and contractions
+        technical_terms = {
+            "doesn't", "won't", "can't", "didn't", "isn't", "aren't", "wasn't", "weren't", "haven't",
+            "hasn't", "couldn't", "shouldn't", "wouldn't", "mightn't", "mustn't", "there's", "it's",
+            "that's", "what's", "where's", "who's", "how's", "when's", "why's", "let's", "we're",
+            "they're", "you're", "I'm", "he's", "she's", "it's", "that's", "there's", "here's"
+        }
+        
+        # Combine all reference words
+        all_reference_words = common_words.union(technical_terms)
+        
+        # Clean the word (remove punctuation for comparison)
+        clean_word = re.sub(r'[^\w]', '', word.lower())
+        
+        # If the word is already correct or very short, return as is
+        if clean_word in all_reference_words or len(clean_word) <= 2:
+            return word
+        
+        # Find best match using similarity
+        best_match = self._find_best_word_match(clean_word, all_reference_words)
+        
+        if best_match and self._is_similar_enough(clean_word, best_match):
+            # Preserve original capitalization and punctuation
+            return self._preserve_word_format(word, best_match)
+        
+        return word
+
+    def _find_best_word_match(self, word: str, reference_words: set) -> str:
+        """Find the best matching word from reference set using multiple similarity metrics."""
+        best_match = None
+        best_score = 0
+        
+        for ref_word in reference_words:
+            # Skip if length difference is too large
+            if abs(len(word) - len(ref_word)) > 3:
+                continue
+            
+            # Calculate similarity score
+            score = self._calculate_similarity_score(word, ref_word)
+            
+            if score > best_score and score > 0.5:  # Lower threshold for better detection
+                best_score = score
+                best_match = ref_word
+        
+        return best_match
+
+    def _calculate_similarity_score(self, word1: str, word2: str) -> float:
+        """Calculate similarity score between two words using multiple metrics."""
+        import os
+        
+        # Levenshtein distance (simplified version)
+        distance = self._levenshtein_distance(word1, word2)
+        max_len = max(len(word1), len(word2))
+        levenshtein_score = 1 - (distance / max_len) if max_len > 0 else 0
+        
+        # Common prefix/suffix bonus
+        common_prefix = len(os.path.commonprefix([word1, word2]))
+        common_suffix = len(os.path.commonprefix([word1[::-1], word2[::-1]]))
+        prefix_suffix_bonus = (common_prefix + common_suffix) / (2 * max_len)
+        
+        # Character overlap bonus
+        set1, set2 = set(word1), set(word2)
+        overlap = len(set1.intersection(set2))
+        union = len(set1.union(set2))
+        overlap_score = overlap / union if union > 0 else 0
+        
+        # Weighted combination
+        total_score = (levenshtein_score * 0.5 + 
+                      prefix_suffix_bonus * 0.3 + 
+                      overlap_score * 0.2)
+        
+        return total_score
+
+    def _levenshtein_distance(self, s1: str, s2: str) -> int:
+        """Calculate Levenshtein distance between two strings."""
+        if len(s1) < len(s2):
+            return self._levenshtein_distance(s2, s1)
+        
+        if len(s2) == 0:
+            return len(s1)
+        
+        previous_row = list(range(len(s2) + 1))
+        for i, c1 in enumerate(s1):
+            current_row = [i + 1]
+            for j, c2 in enumerate(s2):
+                insertions = previous_row[j + 1] + 1
+                deletions = current_row[j] + 1
+                substitutions = previous_row[j] + (c1 != c2)
+                current_row.append(min(insertions, deletions, substitutions))
+            previous_row = current_row
+        
+        return previous_row[-1]
+
+    def _is_similar_enough(self, word1: str, word2: str) -> bool:
+        """Check if two words are similar enough to be considered a typo."""
+        # Must have reasonable length similarity
+        length_diff = abs(len(word1) - len(word2))
+        if length_diff > 2:
+            return False
+        
+        # Must have high similarity
+        similarity = self._calculate_similarity_score(word1, word2)
+        return similarity > 0.7
+
+    def _preserve_word_format(self, original: str, corrected: str) -> str:
+        """Preserve original capitalization and punctuation in the corrected word."""
+        # Extract punctuation from original
+        prefix_punct = re.match(r'^[^\w]*', original).group()
+        suffix_punct = re.search(r'[^\w]*$', original).group()
+        
+        # Preserve capitalization
+        if original.isupper():
+            corrected = corrected.upper()
+        elif original[0].isupper():
+            corrected = corrected.capitalize()
+        else:
+            corrected = corrected.lower()
+        
+        # Add back punctuation
+        return prefix_punct + corrected + suffix_punct
 
     def _fix_title_formatting(self, title: str) -> str:
         """Fix spacing, capitalization, and general formatting."""
