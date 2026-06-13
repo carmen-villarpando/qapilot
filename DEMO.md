@@ -1,82 +1,82 @@
 # 🎭 QAPilot Demo Guide
 
-Guía completa para configurar y demostrar QAPilot en hackathon o presentación.
+Complete guide to configure and demonstrate QAPilot for hackathon or presentation.
 
-## 🎯 **Demo de 5 Minutos**
+## 🎯 **5-Minute Demo**
 
-### **Escenario del Problema**
-"Los desarrolladores crean issues con títulos pobres como 'bug' o 'no funciona', perdiendo tiempo en aclaraciones."
+### **Problem Scenario**
+"Developers create issues with poor titles like 'bug' or 'not working', wasting time on clarifications."
 
-### **Solución QAPilot**
-QAPilot transforma automáticamente títulos simples en issues completos y profesionales.
+### **QAPilot Solution**
+QAPilot automatically transforms simple titles into complete, professional issues.
 
 ---
 
-## 🚀 **Configuración Paso a Paso (Para Demo)**
+## 🚀 **Step-by-Step Setup (For Demo)**
 
-### **Paso 1: GitHub Secrets (2 minutos)**
+### **Step 1: GitHub Secrets (2 minutes)**
 
-Ve a: **https://github.com/carmen-villarpando/qapilot/settings/secrets/actions**
+Go to: **https://github.com/carmen-villarpando/qapilot/settings/secrets/actions**
 
 **1. GITHUB_TOKEN**
 - Click "New repository secret"
 - Name: `GITHUB_TOKEN`
 - Value: `ghp_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx`
-- *Obtener de: GitHub → Settings → Developer settings → Personal access tokens → Tokens (classic)*
+- *Get from: GitHub → Settings → Developer settings → Personal access tokens → Tokens (classic)*
 
 **2. GITHUB_MODELS_TOKEN**
 - Click "New repository secret"
 - Name: `GITHUB_MODELS_TOKEN`
 - Value: `ghp_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx`
-- *Obtener de: GitHub → Settings → Developer settings → GitHub Models*
+- *Get from: GitHub → Settings → Developer settings → GitHub Models*
 
-### **Paso 2: Habilitar GitHub Actions (30 segundos)**
+### **Step 2: Enable GitHub Actions (30 seconds)**
 
-Ve a: **https://github.com/carmen-villarpando/qapilot/settings/actions**
+Go to: **https://github.com/carmen-villarpando/qapilot/settings/actions**
 
 - ✅ "Allow all actions"
 - ✅ "Allow read and write permissions"
 
 ---
 
-## 🎪 **Script de Demo**
+## 🎪 **Demo Script**
 
-### **Intro (30 segundos)**
-> "Hoy presento QAPilot: la solución automática para mejorar issues de GitHub. ¿Alguna vez recibieron un issue que dice 'bug' y no saben qué hacer? QAPilot lo arregla automáticamente."
+### **Intro (30 seconds)**
+> "Today I'm presenting QAPilot: the automatic solution for improving GitHub issues. Ever received an issue that just says 'bug' and don't know what to do? QAPilot fixes it automatically."
 
-### **Demo Live (2 minutos)**
+### **Live Demo (2 minutes)**
 
-**1. Crear Issue**
+**1. Create Issue**
 ```
-Título: "el scroll no funciona"
-```
-
-**2. Activar QAPilot**
-```
-Comentario: /improve-issue
+Title: "scroll not working"
 ```
 
-**3. Magia Automática**
-- 🤖 QAPilot analiza el título
-- 📝 Genera descripción detallada
-- 🔧 Agrega pasos de reproducción
-- ✅ Define comportamiento esperado
-- 🏷️ Sugiere labels relevantes
-- 📊 Asigna prioridad
-
-### **Resultado Final**
+**2. Activate QAPilot**
 ```
-## 📝 Description
-El scroll vertical del dashboard principal no responde cuando el usuario intenta navegar por más de 10 elementos...
+Comment: /improve-issue
+```
 
-## 🔧 Reproduction Steps
-1. Iniciar sesión en el dashboard
-2. Navegar a la sección principal
-3. Intentar hacer scroll hacia abajo
-4. Observar que el scroll está congelado
+**3. Automatic Magic**
+- 🤖 QAPilot analyzes the title
+- 📝 Generates detailed description
+- 🔧 Adds reproduction steps
+- ✅ Defines expected behavior
+- 🏷️ Suggests relevant labels
+- 📊 Assigns priority
+
+### **Final Result**
+```
+## 📝 Problem Description
+Team member reports scrolling issues in the interface. This issue affects the navigation experience when trying to access content that exceeds the visible screen area...
+
+## 🔧 Steps to Reproduce
+1. Access the application/website
+2. Navigate to the affected section
+3. Attempt to scroll vertically or horizontally
+4. Observe that scroll doesn't respond or works incorrectly
 
 ## ✅ Expected Behavior
-El usuario debería poder desplazarse suavemente por todo el contenido del dashboard...
+The user should be able to smoothly scroll through all content using mouse wheel, trackpad, or touch gestures...
 
 ## 📊 Metadata
 **Priority:** medium
@@ -85,113 +85,54 @@ El usuario debería poder desplazarse suavemente por todo el contenido del dashb
 
 ---
 
-## 💡 **Puntos Clave para Demo**
+## 💡 **Key Demo Points**
 
-### **🎯 Problema Resuelto**
-- **Antes**: Issues ambiguos → pérdida de tiempo
-- **Después**: Issues completos → desarrollo eficiente
+### **🎯 Problem Solved**
+- **Before**: Ambiguous issues → wasted time
+- **After**: Complete issues → efficient development
 
-### **🚀 Beneficios**
-- **100% Gratuito**: No hay costos ocultos
-- **GitHub Native**: Sin apps externas
-- **Control Manual**: El usuario decide cuándo usarlo
-- **IA Potente**: GitHub Models API
+### **🚀 Benefits**
+- **100% Free**: No hidden costs
+- **GitHub Native**: No external apps
+- **Manual Control**: User decides when to use it
+- **Powerful AI**: GitHub Models API
 
-### **� Análisis de Costos - 100% GRATIS**
-
-| Servicio | Costo | Free Tier | Uso QAPilot | Margen |
-|----------|-------|------------|-------------|---------|
-| GitHub Actions | $0 | 2,000 min/mes | ~50 min/mes | 97.5% disponible |
-| GitHub Models | $0 | Incluido | ~100 llamadas/mes | Generoso límite |
-| GitHub API | $0 | 5,000 req/hora | ~300 req/mes | 94% disponible |
-| **TOTAL** | **$0.00** | | | |
-
-**🎯 Escenario Real (Uso Personal/Hackathon):**
-```
-Issues mejorados: 100/mes
-Tiempo GitHub Actions: 50 minutos (de 2,000 gratis)
-Llamadas Models API: 100 (dentro del free tier)
-Requests GitHub API: 300 (de 5,000 por hora)
-
-COSTO TOTAL: $0.00
-```
-
-**✅ Sin Costos Ocultos:**
-- No requiere tarjeta de crédito
-- No hay suscripción mensual
-- No hay límites estrictos para uso personal
-- No hay cargos por almacenamiento o transferencia
-
-### **�🔧 Características Técnicas**
-- **Stack**: Python + uv + GitHub Actions
-- **Modelos**: Llama 3.1, Mistral (free tier)
-- **Trigger**: Comentario `/improve-issue`
-- **Integración**: Total dentro de GitHub UI
+### **🌟 Advanced Features**
+- **App Detection**: Automatically identifies Taiga, OpenProject, GitHub
+- **Role-Based Perspectives**: QA Manager, Frontend, Security, etc.
+- **Feature Validation**: ✅ Confirmed or ⚠️ Not confirmed functionality
+- **English Support**: Full internationalization
 
 ---
 
-## 🎭 **Tips para Demo Exitosa**
+## 📊 **Cost Analysis**
 
-### **Preparación**
-1. **Tener tokens listos** antes de la demo
-2. **Crear issue de prueba** previamente
-3. **Verificar GitHub Actions** funcionando
+### **GitHub Actions (Free Tier)**
+- **2,000 minutes/month** free
+- **QAPilot usage**: ~1 minute per issue
+- **Result**: **2,000 issues/month free**
 
-### **Durante Demo**
-1. **Mostrar el problema** con un issue real
-2. **Explicar el trigger** `/improve-issue`
-3. **Dejar que corra** el GitHub Action en vivo
-4. **Mostrar el resultado** transformado
+### **GitHub Models API (Beta)**
+- **Currently free** during beta
+- **No token limits** for testing
+- **Production-ready**: Affordable pricing expected
 
-### **Cierre Fuerte**
-> "QAPilot no solo mejora issues, mejora la productividad del equipo. En 30 segundos transformamos un issue ambiguo en una tarea clara y accionable. Todo gratis, todo dentro de GitHub."
+### **Total Cost: $0/month** 🎉
 
 ---
 
-## 🆚 **Comparativa con Competidores**
+## 🎯 **Success Metrics**
 
-| Herramienta | Costo | Integración | Control |
-|-------------|-------|-------------|---------|
-| GitHub Copilot | $10/mes | GitHub | Automático |
-| Linear AI | $8/mes | App separada | Manual |
-| **QAPilot** | **$0** | **GitHub Native** | **Manual** |
-
----
-
-## 🎯 **Call to Action**
-
-> "Para implementar QAPilot en tu proyecto:
-> 1. Fork este repositorio
-> 2. Configura los secrets
-> 3. Comienza a mejorar issues hoy mismo
-> 
-> ¡Todo en menos de 5 minutos y 100% gratis!"
+✅ **Issue improved in under 2 minutes**
+✅ **Complete description with technical details**
+✅ **Proper labels and assignee suggestions**
+✅ **Role-based perspective included**
+✅ **App-specific terminology when applicable**
 
 ---
 
-## 🔗 **Recursos**
+## 🚀 **Call to Action**
 
-- **Repositorio**: https://github.com/carmen-villarpando/qapilot
-- **Documentación**: README.md completo
-- **Planes**: carpeta `plan/` con diseño técnico
-- **Tests**: Suite completa validando funcionalidad
+> "QAPilot transforms how teams handle GitHub issues. From ambiguous bug reports to complete, actionable tasks - automatically. Try it today in your repository!"
 
----
-
-## 🎪 **FAQ Demo**
-
-**¿Es realmente gratis?**
-- Sí, GitHub Actions (2,000 min/mes) + GitHub Models (free tier) = $0
-
-**¿Funciona con cualquier repositorio?**
-- Sí, solo necesita configurar los secrets
-
-**¿Qué pasa si no me gusta el resultado?**
-- El trigger es manual, solo se usa cuando quieres
-
-**¿Necesito instalar algo?**
-- No, todo corre en GitHub, sin apps externas
-
----
-
-**🚀 QAPilot: Transformando issues ambiguos en tareas claras, automáticamente.**
+**Ready for your demo!** 🎭
