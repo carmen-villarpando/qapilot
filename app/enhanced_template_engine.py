@@ -272,7 +272,14 @@ Based on the provided title, this issue appears related to critical functionalit
         detected_app = self.terminology_manager.detect_app_from_context(title, repo_name)
         logger.info(f"Detected app: {detected_app}")
         
-        # Find matching template
+        # Skip template matching when using forced commands
+        if command_type in ["bug", "story"]:
+            logger.info(f"Using forced command type: {command_type}, skipping template matching")
+            improvements = self._generate_generic_improvement(title, repo_context, detected_app, command_type)
+            improvements["improved_title"] = improved_title
+            return improvements
+        
+        # Find matching template for auto mode only
         matched_template = None
         matched_category = None
         
@@ -285,7 +292,7 @@ Based on the provided title, this issue appears related to critical functionalit
         
         if not matched_template:
             logger.info(f"No enhanced template found for: {title}, using generic")
-            improvements = self._generate_generic_improvement(title, repo_context, detected_app)
+            improvements = self._generate_generic_improvement(title, repo_context, detected_app, command_type)
             improvements["improved_title"] = improved_title
             return improvements
         
