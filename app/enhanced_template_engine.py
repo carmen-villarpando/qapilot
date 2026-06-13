@@ -776,7 +776,7 @@ Based on the provided title, this issue appears related to critical functionalit
         # Generate open questions
         open_questions = self._generate_open_questions(title, detected_app, detected_role)
         
-        return f"""## 📝 {improved_title}
+        return f"""## 📝 Bug Report
 
 ### 📋 Description
 
@@ -1460,7 +1460,7 @@ Based on the provided title, this issue appears related to critical functionalit
         # Generate dependencies and risks
         dependencies_risks = self._generate_dependencies_risks(title, detected_app, detected_role)
         
-        return f"""## 📋 {improved_title}
+        return f"""## 📋 User Story
 
 ### 🎯 User Story
 
