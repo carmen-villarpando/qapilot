@@ -216,8 +216,8 @@ class IssueImprover:
         logger.info(f"Building improved body from current_body: {current_body[:100]}...")
         logger.info(f"Available improvements: {list(improvements.keys()) if improvements else 'None'}")
         
-        # Clean /improve-issue command from current body
-        cleaned_body = re.sub(r'/improve-issue', '', current_body, flags=re.IGNORECASE).strip()
+        # Clean all improve commands from current body
+        cleaned_body = re.sub(r'/improve-(issue|bug|story)', '', current_body, flags=re.IGNORECASE).strip()
         logger.info(f"Cleaned body: {cleaned_body[:100]}...")
         
         # Use the complete improved description from EnhancedTemplateEngine

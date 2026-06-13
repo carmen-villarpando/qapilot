@@ -811,14 +811,9 @@ Based on the provided title, this issue appears related to critical functionalit
         """Generate an improved title with typo correction, preserving original intent."""
         # First correct typos and improve formatting only
         corrected_title = self._correct_title_typos(title)
-        title_lower = corrected_title.lower()
         
-        # Only add "Bug:" prefix if it's clearly a bug and doesn't already have it
-        if self._is_bug_issue(title) and not title_lower.startswith("bug:"):
-            return f"Bug: {corrected_title}"
-        else:
-            # Just return the corrected title with proper formatting
-            return corrected_title
+        # Just return the corrected title with proper formatting (no prefix)
+        return corrected_title
 
     def _correct_title_typos(self, title: str) -> str:
         """Correct common typos and improve title formatting."""
@@ -826,6 +821,13 @@ Based on the provided title, this issue appears related to critical functionalit
         
         # Common typo corrections
         typo_corrections = {
+            # Articles and common words
+            'th': 'the',
+            'teh': 'the',
+            'tha': 'the',
+            'a': 'a',
+            'an': 'an',
+            
             # Project/app name typos
             'taiga projet': 'Taiga project',
             'taiga proyect': 'Taiga project',
@@ -1503,14 +1505,9 @@ feature, user-story, {detected_app.lower()}, product-backlog, ready-for-developm
         """Generate improved title for user stories with typo correction, preserving original intent."""
         # First correct typos and improve formatting only
         corrected_title = self._correct_title_typos(title)
-        title_lower = corrected_title.lower()
         
-        # Only add "Feature:" prefix if it's clearly a feature and doesn't already have it
-        if self._is_story_issue(title) and not title_lower.startswith("feature:"):
-            return f"Feature: {corrected_title}"
-        else:
-            # Just return the corrected title with proper formatting
-            return corrected_title
+        # Just return the corrected title with proper formatting (no prefix)
+        return corrected_title
 
     def _generate_user_story(self, title: str, detected_app: str, detected_role: str) -> str:
         """Generate user story in standard format."""
