@@ -40,7 +40,7 @@ class GitHubModelsClient:
 
             async with httpx.AsyncClient() as client:
                 response = await client.post(
-                    f"{self.base_url}/v1/chat/completions",
+                    f"{self.base_url}/inference/chat/completions",
                     headers=self.headers,
                     json=payload,
                     timeout=30.0,
