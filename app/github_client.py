@@ -45,8 +45,11 @@ class GitHubClient:
             if body:
                 issue.edit(body=body)
             if labels:
-                # Remove existing labels and add new ones
-                issue.remove_from_labels()
+                # Get current labels and remove them
+                current_labels = [label.name for label in issue.get_labels()]
+                if current_labels:
+                    issue.remove_from_labels(*current_labels)
+                # Add new labels
                 issue.add_to_labels(*labels)
 
             logger.info(f"Successfully updated issue {issue_number} in {repo_name}")
