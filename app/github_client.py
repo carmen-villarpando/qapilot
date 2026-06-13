@@ -45,11 +45,16 @@ class GitHubClient:
             edit_kwargs = {}
             if title:
                 edit_kwargs['title'] = title
+                logger.info(f"Will update title to: {title}")
             if body:
                 edit_kwargs['body'] = body
+                logger.info(f"Will update body (length: {len(body)})")
             
             if edit_kwargs:
+                logger.info(f"Calling issue.edit with: {list(edit_kwargs.keys())}")
                 issue.edit(**edit_kwargs)
+                logger.info(f"Successfully updated title/body")
+                
             if labels:
                 # Get current labels and remove them
                 current_labels = [label.name for label in issue.get_labels()]
@@ -57,6 +62,7 @@ class GitHubClient:
                     issue.remove_from_labels(*current_labels)
                 # Add new labels
                 issue.add_to_labels(*labels)
+                logger.info(f"Successfully updated labels: {labels}")
 
             logger.info(f"Successfully updated issue {issue_number} in {repo_name}")
             return True
