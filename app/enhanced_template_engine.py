@@ -32,7 +32,7 @@ class EnhancedTemplateEngine:
         self.roles = {
             "qa_manager": RoleContext(
                 role="QA Manager",
-                perspective="Calidad y testing exhaustivo",
+                perspective="Quality and comprehensive testing",
                 focus_areas=["testing", "quality", "edge cases", "user acceptance"],
                 documentation_urls=[
                     "https://www.istqb.org/",
@@ -41,7 +41,7 @@ class EnhancedTemplateEngine:
             ),
             "product_owner": RoleContext(
                 role="Product Owner",
-                perspective="Valor de negocio y experiencia del usuario",
+                perspective="Business value and user experience",
                 focus_areas=["business value", "user stories", "acceptance criteria", "stakeholders"],
                 documentation_urls=[
                     "https://www.atlassian.com/agile/product-owner",
@@ -50,7 +50,7 @@ class EnhancedTemplateEngine:
             ),
             "developer": RoleContext(
                 role="Developer",
-                perspective="Implementación técnica y mejores prácticas",
+                perspective="Technical implementation and best practices",
                 focus_areas=["code quality", "architecture", "performance", "maintainability"],
                 documentation_urls=[
                     "https://martinfowler.com/",
@@ -59,7 +59,7 @@ class EnhancedTemplateEngine:
             ),
             "security_engineer": RoleContext(
                 role="Security Engineer",
-                perspective="Seguridad y cumplimiento normativo",
+                perspective="Security and compliance",
                 focus_areas=["security", "compliance", "vulnerabilities", "best practices"],
                 documentation_urls=[
                     "https://owasp.org/",
@@ -68,7 +68,7 @@ class EnhancedTemplateEngine:
             ),
             "frontend_engineer": RoleContext(
                 role="Frontend Engineer",
-                perspective="UX/UI y experiencia del usuario",
+                perspective="UX/UI and user experience",
                 focus_areas=["ui", "ux", "accessibility", "responsive design"],
                 documentation_urls=[
                     "https://web.dev/",
@@ -77,7 +77,7 @@ class EnhancedTemplateEngine:
             ),
             "backend_engineer": RoleContext(
                 role="Backend Engineer",
-                perspective="Arquitectura del servidor y datos",
+                perspective="Server architecture and data",
                 focus_areas=["api", "database", "performance", "scalability"],
                 documentation_urls=[
                     "https://12factor.net/",
@@ -86,7 +86,7 @@ class EnhancedTemplateEngine:
             ),
             "performance_engineer": RoleContext(
                 role="Performance Engineer",
-                perspective="Optimización y métricas",
+                perspective="Optimization and metrics",
                 focus_areas=["performance", "monitoring", "optimization", "metrics"],
                 documentation_urls=[
                     "https://web.dev/vitals/",
@@ -95,7 +95,7 @@ class EnhancedTemplateEngine:
             ),
             "ux_writer": RoleContext(
                 role="UX Writer",
-                perspective="Contenido y comunicación",
+                perspective="Content and communication",
                 focus_areas=["content", "localization", "accessibility", "user communication"],
                 documentation_urls=[
                     "https://www.nngroup.com/",
@@ -122,13 +122,13 @@ class EnhancedTemplateEngine:
         
         # Role detection patterns
         role_patterns = {
-            "qa_manager": ["test", "testing", "qa", "calidad", "bug", "error", "issue"],
-            "product_owner": ["feature", "requirement", "user story", "funcionalidad", "necesidad"],
-            "security_engineer": ["security", "seguridad", "auth", "login", "password", "vulnerability"],
+            "qa_manager": ["test", "testing", "qa", "quality", "bug", "error", "issue"],
+            "product_owner": ["feature", "requirement", "user story", "functionality", "need"],
+            "security_engineer": ["security", "auth", "login", "password", "vulnerability"],
             "frontend_engineer": ["ui", "frontend", "button", "scroll", "interface", "design"],
             "backend_engineer": ["api", "backend", "database", "server", "export", "data"],
-            "performance_engineer": ["performance", "slow", "lento", "rápido", "optimization", "carga"],
-            "ux_writer": ["message", "text", "content", "copy", "error message", "comunicación"]
+            "performance_engineer": ["performance", "slow", "fast", "optimization", "load"],
+            "ux_writer": ["message", "text", "content", "copy", "error message", "communication"]
         }
         
         # Count matches for each role
@@ -170,7 +170,7 @@ class EnhancedTemplateEngine:
                 parsed = urlparse(url)
                 if parsed.netloc not in allowed_domains:
                     logger.warning(f"Blocked unauthorized domain: {parsed.netloc}")
-                    content.append(f"### 📚 Referencia: {url}\n*Dominio no autorizado para seguridad*\n")
+                    content.append(f"### 📚 Reference: {url}\n*Unauthorized domain blocked for security*\n")
                     continue
                 
                 # Rate limiting: max 3 requests
@@ -182,13 +182,13 @@ class EnhancedTemplateEngine:
                 if response.status_code == 200:
                     # Extract basic content (simplified for demo)
                     text = response.text[:500]  # Reduced content size
-                    content.append(f"### 📚 Referencia: {url}\n{text}...\n")
+                    content.append(f"### 📚 Reference: {url}\n{text}...\n")
                 else:
                     logger.warning(f"HTTP {response.status_code} from {url}")
-                    content.append(f"### 📚 Referencia: {url}\n*Error al acceder al contenido*\n")
+                    content.append(f"### 📚 Reference: {url}\n*Error accessing content*\n")
             except Exception as e:
                 logger.warning(f"Failed to fetch documentation from {url}: {e}")
-                content.append(f"### 📚 Referencia: {url}\n*No se pudo acceder al contenido*\n")
+                content.append(f"### 📚 Reference: {url}\n*Could not access content*\n")
         
         return "\n".join(content)
 
@@ -197,7 +197,7 @@ class EnhancedTemplateEngine:
         enhanced_sections = []
         
         # Add role perspective
-        role_section = f"\n### 👤 Perspectiva de {role_context.role}\n\n**Enfoque:** {role_context.perspective}\n\n**Áreas clave:** {', '.join(role_context.focus_areas)}\n"
+        role_section = f"\n### 👤 {role_context.role} Perspective\n\n**Focus:** {role_context.perspective}\n\n**Key Areas:** {', '.join(role_context.focus_areas)}\n"
         enhanced_sections.append(role_section)
         
         # Add external documentation if available
@@ -213,32 +213,32 @@ class EnhancedTemplateEngine:
         """Iterate on a poor description to make it more detailed and actionable."""
         if len(current_description.strip()) < 100:  # Consider it poor if too short
             # Generate a more detailed description based on title
-            enhanced_description = f"""## 📝 Descripción del Problema
+            enhanced_description = f"""## 📝 Problem Description
 
-El miembro del equipo reporta: "{title}"
+Team member reports: "{title}"
 
-### 🎯 Análisis del Problema
+### 🎯 Problem Analysis
 
-Esta situación requiere atención inmediata ya que afecta directamente la experiencia del miembro y el funcionamiento esperado del sistema.
+This situation requires immediate attention as it directly affects the member experience and expected system functionality.
 
-### 🔍 Contexto Adicional
+### 🔍 Additional Context
 
- basado en el título proporcionado, este issue parece relacionado con funcionalidades críticas que necesitan ser abordadas para mantener la calidad y el rendimiento del sistema.
+Based on the provided title, this issue appears related to critical functionalities that need to be addressed to maintain system quality and performance.
 
-### 📋 Siguientes Pasos
+### 📋 Next Steps
 
-1. Investigar el problema reportado
-2. Reproducir el escenario descrito
-3. Identificar la causa raíz
-4. Implementar una solución adecuada
-5. Verificar la corrección
-6. Documentar los cambios realizados
+1. Investigate the reported problem
+2. Reproduce the described scenario
+3. Identify the root cause
+4. Implement an appropriate solution
+5. Verify the correction
+6. Document the changes made
 
-### 🎪 Impacto
+### 🎪 Impact
 
-- **Miembros afectados:** Todos los usuarios de la plataforma
-- **Urgencia:** Requiere atención prioritaria
-- **Complejidad:** Por determinar tras análisis inicial"""
+- **Affected members:** All platform users
+- **Urgency:** Requires priority attention
+- **Complexity:** To be determined after initial analysis"""
             
             return enhanced_description
         
@@ -349,37 +349,37 @@ Esta situación requiere atención inmediata ya que afecta directamente la exper
         
         # Add app-specific terminology and feature validation
         app_enhanced_description = self.terminology_manager.enhance_description_with_validation(
-            f"El miembro del equipo reporta: \"{title}\"", detected_app, mentioned_features
+            f"Team member reports: \"{title}\"", detected_app, mentioned_features
         )
         
-        description = f"""## 📝 Descripción del Problema
+        description = f"""## 📝 Problem Description
 
 {app_enhanced_description}
 
-### 👤 Perspectiva de {role_context.role}
+### 👤 {role_context.role} Perspective
 
-**Enfoque:** {role_context.perspective}
+**Focus:** {role_context.perspective}
 
-**Áreas clave:** {', '.join(role_context.focus_areas)}
+**Key Areas:** {', '.join(role_context.focus_areas)}
 
-### 🔧 Pasos para Reproducir
+### 🔧 Steps to Reproduce
 
-1. Acceder a la funcionalidad afectada
-2. Identificar el escenario específico del problema
-3. Reproducir el comportamiento no deseado
-4. Documentar los resultados observados
+1. Access the affected functionality
+2. Identify the specific problem scenario
+3. Reproduce the undesired behavior
+4. Document the observed results
 
-### ✅ Comportamiento Esperado
+### ✅ Expected Behavior
 
-El sistema debería funcionar de manera eficiente y predecible, proporcionando una experiencia positiva para el miembro del equipo.
+The system should function efficiently and predictably, providing a positive experience for team members.
 
-### 📊 Criterios de Aceptación
+### 📊 Acceptance Criteria
 
-- [ ] El problema está claramente identificado
-- [ ] Se puede reproducir consistentemente
-- [ ] Se implementa una solución efectiva
-- [ ] La solución es verificada y probada
-- [ ] No se introducen nuevos problemas
+- [ ] The problem is clearly identified
+- [ ] It can be reproduced consistently
+- [ ] An effective solution is implemented
+- [ ] The solution is verified and tested
+- [ ] No new problems are introduced
 """
         
         # Get app-specific labels

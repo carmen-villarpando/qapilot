@@ -11,7 +11,7 @@ class AppTerminology:
     terms: Dict[str, str]  # Generic term -> App-specific term
     concepts: Dict[str, str]  # Concept -> App-specific description
     documentation_urls: List[str]
-    jerga: List[str]  # Common phrases/expressions
+    slang: List[str]  # Common phrases/expressions
     features: Dict[str, str]  # Feature -> Description
 
 class AppTerminologyManager:
@@ -42,14 +42,14 @@ class AppTerminologyManager:
                     "milestone": "Milestone"
                 },
                 concepts={
-                    "agile": "Metodología ágil para gestión de proyectos iterativa",
-                    "scrum": "Framework ágil con sprints, roles y ceremonias definidas",
-                    "kanban": "Sistema visual de gestión del flujo de trabajo",
-                    "user_story": "Descripción de una funcionalidad desde perspectiva del usuario",
-                    "velocity": "Métrica de cantidad de trabajo completado por sprint",
-                    "burndown": "Gráfico que muestra trabajo restante vs tiempo",
-                    "definition_of_done": "Criterios que debe cumplir una tarea para estar completa",
-                    "points": "Estimación de esfuerzo relativo (story points)"
+                    "agile": "Iterative project management methodology",
+                    "scrum": "Agile framework with sprints, roles and defined ceremonies",
+                    "kanban": "Visual workflow management system",
+                    "user_story": "Functionality description from user perspective",
+                    "velocity": "Metric of work completed per sprint",
+                    "burndown": "Chart showing remaining work vs time",
+                    "definition_of_done": "Criteria a task must meet to be complete",
+                    "points": "Relative effort estimation (story points)"
                 },
                 documentation_urls=[
                     "https://docs.taiga.io/",
@@ -57,26 +57,26 @@ class AppTerminologyManager:
                     "https://github.com/taigaio/taiga-doc"
                 ],
                 jerga=[
-                    "Vamos a crear una user story para esto",
-                    "Necesitamos puntos para esta tarea",
-                    "¿Cuál es la velocity del equipo?",
-                    "Esto va en el backlog del producto",
-                    "Hagamos un planning poker",
-                    "El burndown muestra que vamos bien",
-                    "Cumple con la Definition of Done",
-                    "Movamos esto al siguiente sprint",
-                    "Esto es un bloqueo, necesitamos desbloquear",
-                    "El workflow está optimizado"
+                    "Let's create a user story for this",
+                    "We need points for this task",
+                    "What's the team velocity?",
+                    "This goes in the product backlog",
+                    "Let's do planning poker",
+                    "The burndown shows we're on track",
+                    "It meets the Definition of Done",
+                    "Let's move this to the next sprint",
+                    "This is a blocker, we need to unblock",
+                    "The workflow is optimized"
                 ],
                 features={
-                    "kanban_boards": "Tableros Kanban con gestión visual del flujo",
-                    "scrum_boards": "Tableros Scrum con sprints y backlog",
-                    "issues": "Gestión de issues y bugs integrada",
-                    "wiki": "Documentación integrada en el proyecto",
-                    "epics": "Gestión de epics para grandes funcionalidades",
-                    "tasks": "Descomposición de user stories en tareas",
-                    "time_tracking": "Seguimiento de tiempo por tarea",
-                    "integrations": "Integraciones con GitHub, GitLab, Slack"
+                    "kanban_boards": "Kanban boards with visual flow management",
+                    "scrum_boards": "Scrum boards with sprints and backlog",
+                    "issues": "Integrated issue and bug management",
+                    "wiki": "Integrated project documentation",
+                    "epics": "Epic management for large functionalities",
+                    "tasks": "User story decomposition into tasks",
+                    "time_tracking": "Time tracking per task",
+                    "integrations": "Integrations with GitHub, GitLab, Slack"
                 }
             ),
             "openproject": AppTerminology(
@@ -101,14 +101,14 @@ class AppTerminologyManager:
                     "milestone": "Version"
                 },
                 concepts={
-                    "work_package": "Unidad básica de trabajo en OpenProject",
-                    "project_hierarchy": "Estructura jerárquica de proyectos y subproyectos",
-                    "cost_tracking": "Gestión de costos y presupuesto",
-                    "time_tracking": "Registro de horas trabajadas",
-                    "gantt": "Diagrama de Gantt para planificación",
-                    "wp_types": "Tipos de work packages (Task, Bug, Feature, etc.)",
-                    "status_workflow": "Flujo de estados personalizable",
-                    "custom_fields": "Campos personalizados adicionales"
+                    "work_package": "Basic work unit in OpenProject",
+                    "project_hierarchy": "Hierarchical structure of projects and subprojects",
+                    "cost_tracking": "Cost and budget management",
+                    "time_tracking": "Work hours registration",
+                    "gantt": "Gantt chart for planning",
+                    "wp_types": "Work package types (Task, Bug, Feature, etc.)",
+                    "status_workflow": "Customizable status flow",
+                    "custom_fields": "Additional custom fields"
                 },
                 documentation_urls=[
                     "https://www.openproject.org/docs/",
@@ -116,26 +116,26 @@ class AppTerminologyManager:
                     "https://api.openproject.org/"
                 ],
                 jerga=[
-                    "Creemos un work package para esto",
-                    "Esto necesita un tipo específico de WP",
-                    "El Gantt muestra la dependencia",
-                    "Registremos las horas en el time tracking",
-                    "El cost tracking está actualizado",
-                    "El workflow del status está bien configurado",
-                    "Necesitamos revisar el project hierarchy",
-                    "Esto va en la versión 2.0",
-                    "El custom field captura esta información",
-                    "La assignee ya está asignada"
+                    "Let's create a work package for this",
+                    "This needs a specific WP type",
+                    "The Gantt shows the dependency",
+                    "Let's log the hours in time tracking",
+                    "Cost tracking is up to date",
+                    "The status workflow is well configured",
+                    "We need to review the project hierarchy",
+                    "This goes in version 2.0",
+                    "The custom field captures this information",
+                    "The assignee is already assigned"
                 ],
                 features={
-                    "gantt_charts": "Diagramas de Gantt para planificación",
-                    "cost_tracking": "Seguimiento de costos y presupuesto",
-                    "time_tracking": "Registro de tiempo y horas trabajadas",
-                    "project_hierarchy": "Estructura de proyectos y subproyectos",
-                    "work_packages": "Gestión de paquetes de trabajo",
-                    "team_planner": "Planificación visual de equipo",
-                    "boards": "Tableros ágiles con configuración flexible",
-                    "wiki": "Documentación colaborativa integrada"
+                    "gantt_charts": "Gantt charts for planning",
+                    "cost_tracking": "Cost and budget tracking",
+                    "time_tracking": "Time and work hours tracking",
+                    "project_hierarchy": "Project and subproject structure",
+                    "work_packages": "Work package management",
+                    "team_planner": "Visual team planning",
+                    "boards": "Agile boards with flexible configuration",
+                    "wiki": "Integrated collaborative documentation"
                 }
             ),
             "github": AppTerminology(
@@ -160,14 +160,14 @@ class AppTerminologyManager:
                     "milestone": "Milestone"
                 },
                 concepts={
-                    "pull_request": "Propuesta de cambios al código",
-                    "fork": "Copia personal de un repositorio",
-                    "branch": "Rama de desarrollo paralela",
-                    "merge": "Integración de cambios",
-                    "commit": "Punto de guardado en el historial",
-                    "repository": "Almacén de código y archivos",
-                    "workflow": "Automatización con GitHub Actions",
-                    "release": "Versión publicada del software"
+                    "pull_request": "Code change proposal",
+                    "fork": "Personal copy of a repository",
+                    "branch": "Parallel development branch",
+                    "merge": "Integration of changes",
+                    "commit": "Save point in history",
+                    "repository": "Code and files storage",
+                    "workflow": "Automation with GitHub Actions",
+                    "release": "Published software version"
                 },
                 documentation_urls=[
                     "https://docs.github.com/",
@@ -175,26 +175,26 @@ class AppTerminologyManager:
                     "https://docs.github.com/en/projects"
                 ],
                 jerga=[
-                    "Abramos un issue para esto",
-                    "Hagamos un pull request",
-                    "Esto necesita un merge",
-                    "Creemos una rama nueva",
-                    "El workflow se ejecutará automáticamente",
-                    "Hagamos fork del repositorio",
-                    "Esto va en el milestone v2.0",
-                    "El commit está listo",
-                    "La release está publicada",
-                    "El project board está actualizado"
+                    "Let's open an issue for this",
+                    "Let's make a pull request",
+                    "This needs a merge",
+                    "Let's create a new branch",
+                    "The workflow will run automatically",
+                    "Let's fork the repository",
+                    "This goes in milestone v2.0",
+                    "The commit is ready",
+                    "The release is published",
+                    "The project board is updated"
                 ],
                 features={
-                    "issues": "Seguimiento de problemas y tareas",
-                    "projects": "Tableros de proyecto kanban",
-                    "actions": "Automatización de workflows",
-                    "pull_requests": "Revisión y fusión de código",
-                    "releases": "Gestión de versiones",
-                    "pages": "Sitios web estáticos",
-                    "packages": "Registro de paquetes",
-                    "discussions": "Foros de discusión"
+                    "issues": "Problem and task tracking",
+                    "projects": "Kanban project boards",
+                    "actions": "Workflow automation",
+                    "pull_requests": "Code review and merging",
+                    "releases": "Version management",
+                    "pages": "Static websites",
+                    "packages": "Package registry",
+                    "discussions": "Discussion forums"
                 }
             )
         }
@@ -223,8 +223,8 @@ class AppTerminologyManager:
         
         return translated
 
-    def enhance_description_with_jerga(self, description: str, app_name: str) -> str:
-        """Enhance description with app-specific jargon and terminology."""
+    def enhance_description_with_slang(self, description: str, app_name: str) -> str:
+        """Enhance description with app-specific slang and terminology."""
         terminology = self.get_app_terminology(app_name)
         
         if not terminology:
@@ -233,20 +233,20 @@ class AppTerminologyManager:
         enhanced = description
         
         # Add app-specific context
-        enhanced += f"\n\n## 🎯 Contexto de {terminology.name}\n\n"
+        enhanced += f"\n\n## 🎯 {terminology.name} Context\n\n"
         
         # Add relevant concepts
-        enhanced += "**Conceptos Clave:**\n"
+        enhanced += "**Key Concepts:**\n"
         for concept, explanation in list(terminology.concepts.items())[:3]:
             enhanced += f"- **{concept.replace('_', ' ').title()}**: {explanation}\n"
         
-        enhanced += "\n**Terminología Específica:**\n"
+        enhanced += "\n**Specific Terminology:**\n"
         for generic, specific in list(terminology.terms.items())[:5]:
             enhanced += f"- **{specific}**: {generic.title()}\n"
         
-        enhanced += "\n**Jerga Común del Equipo:**\n"
-        for jerga in terminology.jerga[:3]:
-            enhanced += f"- \"{jerga}\"\n"
+        enhanced += "\n**Common Team Slang:**\n"
+        for slang in terminology.slang[:3]:
+            enhanced += f"- \"{slang}\"\n"
         
         return enhanced
 
@@ -368,30 +368,30 @@ class AppTerminologyManager:
         enhanced = description
         
         # Add app-specific context
-        enhanced += f"\n\n## 🎯 Contexto de {terminology.name}\n\n"
+        enhanced += f"\n\n## 🎯 {terminology.name} Context\n\n"
         
         # Validate mentioned features
         if mentioned_features:
-            enhanced += "**Validación de Funcionalidades:**\n"
+            enhanced += "**Feature Validation:**\n"
             for feature in mentioned_features:
                 if self.validate_feature_exists(feature, app_name):
-                    enhanced += f"- ✅ **{feature}**: Funcionalidad confirmada en {terminology.name}\n"
+                    enhanced += f"- ✅ **{feature}**: Confirmed functionality in {terminology.name}\n"
                 else:
-                    enhanced += f"- ⚠️ **{feature}**: Esta funcionalidad no existe o no está confirmada en {terminology.name}\n"
+                    enhanced += f"- ⚠️ **{feature}**: This functionality does not exist or is not confirmed in {terminology.name}\n"
             enhanced += "\n"
         
         # Add relevant concepts
-        enhanced += "**Conceptos Clave:**\n"
+        enhanced += "**Key Concepts:**\n"
         for concept, explanation in list(terminology.concepts.items())[:3]:
             enhanced += f"- **{concept.replace('_', ' ').title()}**: {explanation}\n"
         
-        enhanced += "\n**Terminología Específica:**\n"
+        enhanced += "\n**Specific Terminology:**\n"
         for generic, specific in list(terminology.terms.items())[:5]:
             enhanced += f"- **{specific}**: {generic.title()}\n"
         
-        enhanced += "\n**Jerga Común del Equipo:**\n"
-        for jerga in terminology.jerga[:3]:
-            enhanced += f"- \"{jerga}\"\n"
+        enhanced += "\n**Common Team Slang:**\n"
+        for slang in terminology.slang[:3]:
+            enhanced += f"- \"{slang}\"\n"
         
         return enhanced
 
@@ -411,7 +411,7 @@ class AppTerminologyManager:
                 mentioned_features.append(feature_name.replace("_", " "))
         
         # Check common feature names
-        common_features = ["kanban", "scrum", "gantt", "board", "tablero", "sprint", "backlog"]
+        common_features = ["kanban", "scrum", "gantt", "board", "sprint", "backlog"]
         for feature in common_features:
             if feature in text_lower:
                 mentioned_features.append(feature)
