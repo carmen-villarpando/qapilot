@@ -4,8 +4,8 @@ import logging
 import re
 from typing import Any
 
-from .github_client import GitHubClient
-from .github_models_client import GitHubModelsClient
+from github_client import GitHubClient
+from github_models_client import GitHubModelsClient
 
 logger = logging.getLogger(__name__)
 

@@ -5,7 +5,7 @@ import logging
 import os
 import sys
 
-from .issue_improver import IssueImprover
+from issue_improver import IssueImprover
 
 # Configure logging
 logging.basicConfig(

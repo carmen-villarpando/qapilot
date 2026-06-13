@@ -41,4 +41,4 @@ jobs:
           COMMENT_BODY: ${{ github.event.comment.body }}
           COMMENT_AUTHOR: ${{ github.event.comment.user.login }}
         run: |
-          uv run python -m app.main_improve_issue
+          cd app && uv run python -m main_improve_issue
