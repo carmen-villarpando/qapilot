@@ -41,10 +41,15 @@ class GitHubClient:
             if not issue:
                 return False
 
+            # Combine title and body updates in a single call
+            edit_kwargs = {}
             if title:
-                issue.edit(title=title)
+                edit_kwargs['title'] = title
             if body:
-                issue.edit(body=body)
+                edit_kwargs['body'] = body
+            
+            if edit_kwargs:
+                issue.edit(**edit_kwargs)
             if labels:
                 # Get current labels and remove them
                 current_labels = [label.name for label in issue.get_labels()]

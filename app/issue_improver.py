@@ -230,12 +230,15 @@ class IssueImprover:
                 improved_description += "\n\n---\n\n*QAPilot improved this issue*"
                 logger.info("Added QAPilot signature")
             
-            # Combine with cleaned original body if there's meaningful content
-            if cleaned_body and len(cleaned_body.strip()) > 10:
+            # For forced commands (/improve-bug, /improve-story), use only improved description
+            # For auto-detection (/improve-issue), combine if there's meaningful original content
+            if cleaned_body and len(cleaned_body.strip()) > 10 and "QAPilot improved this issue" in current_body:
+                # This is a subsequent improvement, combine with original
                 final_body = f"{cleaned_body}\n\n---\n\n{improved_description}"
                 logger.info(f"Combined body length: {len(final_body)}")
                 return final_body
             else:
+                # First improvement or forced command, use only improved description
                 logger.info(f"Using only improved description, length: {len(improved_description)}")
                 return improved_description
         else:

@@ -825,6 +825,7 @@ Based on the provided title, this issue appears related to critical functionalit
             'th': 'the',
             'teh': 'the',
             'tha': 'the',
+            'he': 'the',
             'a': 'a',
             'an': 'an',
             
