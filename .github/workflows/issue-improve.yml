@@ -15,7 +15,7 @@ env:
 jobs:
   improve-issue:
     runs-on: ubuntu-latest
-    if: contains(github.event.comment.body, '/improve-issue')
+    if: contains(github.event.comment.body, '/improve-issue') && github.event.issue.state == 'open'
     
     steps:
       - name: Checkout repository

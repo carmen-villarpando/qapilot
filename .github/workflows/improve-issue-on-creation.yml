@@ -15,7 +15,7 @@ env:
 jobs:
   improve-issue-on-creation:
     runs-on: ubuntu-latest
-    if: contains(github.event.issue.body, '/improve-issue')
+    if: contains(github.event.issue.body, '/improve-issue') && !contains(github.event.issue.body, 'QAPilot improved this issue')
     
     steps:
       - name: Checkout repository
