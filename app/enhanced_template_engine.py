@@ -1016,21 +1016,41 @@ Based on the provided title, this issue appears related to critical functionalit
         # Remove extra spaces
         title = re.sub(r'\s+', ' ', title.strip())
         
-        # Capitalize first letter of each word (but keep technical terms consistent)
+        # Use sentence case: only capitalize first word and proper nouns
+        if not title:
+            return title
+        
         words = title.split()
         formatted_words = []
         
-        for word in words:
-            word_lower = word.lower()
-            
-            # Keep technical terms in consistent case
-            if word_lower in ['taiga', 'kanban', 'github', 'api', 'ui', 'ux']:
-                formatted_words.append(word.title())
-            elif word_lower in ['qa', 'pm', 'po']:
-                formatted_words.append(word.upper())
+        # Always capitalize first word
+        if words:
+            first_word = words[0]
+            # Check if it's already properly capitalized or all caps
+            if first_word.isupper():
+                formatted_words.append(first_word)
             else:
-                # Capitalize first letter
-                formatted_words.append(word.capitalize())
+                formatted_words.append(first_word.capitalize())
+        
+        # Process remaining words
+        for i, word in enumerate(words[1:], 1):
+            word_lower = word.lower()
+            word_original = word
+            
+            # Preserve words that are already all caps (like acronyms)
+            if word_original.isupper():
+                formatted_words.append(word_original)
+            # Keep technical terms and proper nouns in their proper case
+            elif word_lower in ['taiga', 'kanban', 'github', 'api', 'ui', 'ux', 'javascript', 'python', 'css', 'html']:
+                formatted_words.append(word.title())
+            elif word_lower in ['qa', 'pm', 'po', 'ui', 'ux']:
+                formatted_words.append(word.upper())
+            # Keep words that start with capital letter (likely proper nouns)
+            elif word_original[0].isupper() and len(word_original) > 1:
+                formatted_words.append(word_original)
+            else:
+                # Keep as lowercase for normal words
+                formatted_words.append(word_lower)
         
         return ' '.join(formatted_words)
 
