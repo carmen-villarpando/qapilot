@@ -66,6 +66,54 @@ class IssueImprover:
 
         return success
 
+    async def improve_issue_from_creation(
+        self,
+        repo_name: str,
+        issue_number: int,
+        issue_body: str,
+        issue_author: str
+    ) -> bool:
+        """Improve issue triggered on creation."""
+        # Check if issue body contains the trigger command
+        if not self._is_improve_command(issue_body):
+            logger.info(f"Issue body does not contain improve command: {issue_body}")
+            return False
+
+        # Get the issue
+        issue = self.github_client.get_issue(repo_name, issue_number)
+        if not issue:
+            logger.error(f"Could not find issue {issue_number} in {repo_name}")
+            return False
+
+        title = issue.title
+        logger.info(f"Improving issue {issue_number} on creation: '{title}'")
+
+        # Add reaction to indicate processing
+        try:
+            issue.create_reaction("+1")
+        except Exception as e:
+            logger.warning(f"Could not add reaction: {e}")
+
+        # Get repository context
+        repo_context = await self._get_repo_context(repo_name)
+
+        # Generate improvements using templates
+        improvements = self.template_engine.improve_issue(title, repo_context)
+        if not improvements:
+            logger.error("Failed to generate improvements")
+            await self._add_error_comment(repo_name, issue_number)
+            return False
+
+        # Apply improvements
+        success = await self._apply_improvements(repo_name, issue_number, improvements)
+
+        if success:
+            await self._add_creation_success_comment(repo_name, issue_number, issue_author)
+        else:
+            await self._add_error_comment(repo_name, issue_number)
+
+        return success
+
     def _is_improve_command(self, comment_body: str) -> bool:
         """Check if comment contains the improve command."""
         # Look for /improve-issue command
@@ -173,6 +221,19 @@ class IssueImprover:
         comment = "🚀 **Issue improved by QAPilot!**\n\n"
         comment += f"Triggered by @{triggered_by}\n"
         comment += "Added description, reproduction steps, expected behavior, and labels."
+
+        self.github_client.add_comment(repo_name, issue_number, comment)
+
+    async def _add_creation_success_comment(
+        self,
+        repo_name: str,
+        issue_number: int,
+        created_by: str
+    ) -> None:
+        """Add success comment for issue creation."""
+        comment = "🚀 **Issue automatically improved by QAPilot!**\n\n"
+        comment += f"Created by @{created_by}\n"
+        comment += "Automatically added description, reproduction steps, expected behavior, and labels."
 
         self.github_client.add_comment(repo_name, issue_number, comment)
 

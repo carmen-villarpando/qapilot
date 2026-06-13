@@ -24,22 +24,47 @@ async def main():
         issue_number = int(os.getenv("ISSUE_NUMBER", "0"))
         comment_body = os.getenv("COMMENT_BODY", "")
         comment_author = os.getenv("COMMENT_AUTHOR", "")
+        issue_body = os.getenv("ISSUE_BODY", "")
+        issue_author = os.getenv("ISSUE_AUTHOR", "")
 
         logger.info(f"Processing issue {issue_number} in {repo_name}")
-        logger.info(f"Comment by {comment_author}: {comment_body[:100]}...")
+        
+        # Check if this is a comment trigger or issue creation trigger
+        if comment_body and comment_author:
+            logger.info(f"Comment by {comment_author}: {comment_body[:100]}...")
+            
+            if not all([repo_name, issue_number, comment_body, comment_author]):
+                logger.error("Missing required environment variables for comment")
+                sys.exit(1)
 
-        if not all([repo_name, issue_number, comment_body, comment_author]):
-            logger.error("Missing required environment variables")
+            # Create improver and process comment
+            improver = IssueImprover.from_env()
+            success = await improver.improve_issue_from_comment(
+                repo_name=repo_name,
+                issue_number=issue_number,
+                comment_body=comment_body,
+                comment_author=comment_author
+            )
+        
+        elif issue_body and issue_author:
+            logger.info(f"Issue created by {issue_author}: {issue_body[:100]}...")
+            
+            if not all([repo_name, issue_number, issue_body, issue_author]):
+                logger.error("Missing required environment variables for issue creation")
+                sys.exit(1)
+
+            # Create improver and process issue creation
+            improver = IssueImprover.from_env()
+            success = await improver.improve_issue_from_creation(
+                repo_name=repo_name,
+                issue_number=issue_number,
+                issue_body=issue_body,
+                issue_author=issue_author
+            )
+        
+        else:
+            logger.error("Neither comment nor issue creation data provided")
             sys.exit(1)
-
-        # Create improver and process
-        improver = IssueImprover.from_env()
-        success = await improver.improve_issue_from_comment(
-            repo_name=repo_name,
-            issue_number=issue_number,
-            comment_body=comment_body,
-            comment_author=comment_author
-        )
 
         if success:
             logger.info("Issue improved successfully")
