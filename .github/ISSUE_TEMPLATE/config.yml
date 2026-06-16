@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 🚀 QAPilot Issue Improvement
+    url: https://github.com/carmen-villarpando/qapilot/issues/new?assignees=&labels=&template=&title=%2Fimprove-issue+%3A+
+    about: Use this to create an issue that will be automatically improved by QAPilot
+  - name: 📋 General Question
+    url: https://github.com/carmen-villarpando/qapilot/discussions/new
+    about: Ask a question or start a discussion
